@@ -1,11 +1,9 @@
---- START OF FILE Paste July 20, 2026 - 4:38PM ---
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liga Pro Basketball</title>
+    <title>ABAM - Liga de Básquet Amateur</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -34,12 +32,24 @@
         .hidden { display: none !important; }
         .fade-in { animation: fadeIn 0.5s ease forwards; }
         .slide-up { animation: slideUp 0.6s ease forwards; }
+        .cursor-pointer { cursor: pointer; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         header { position: sticky; top: 0; z-index: 1000; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(7, 9, 19, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--glass-border); }
-        .logo { font-size: 1.8rem; font-weight: 900; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        
+        /* LOGO ABAM (NAVBAR Y FOOTER) */
+        .brand-logo { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: fit-content; }
+        .brand-logo-top { display: flex; flex-direction: column; align-items: center; position: relative; }
+        .brand-logo-text { font-family: 'Montserrat', sans-serif; font-size: 2rem; font-weight: 900; color: white; line-height: 1; letter-spacing: -1.5px; text-transform: uppercase; }
+        .brand-logo-icon { width: 22px; height: 11px; overflow: hidden; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); }
+        .brand-logo-icon i { font-size: 22px; color: var(--primary); position: absolute; top: 0; left: 0; line-height: 1; }
+        .brand-logo-divider { width: 100%; height: 2px; background: white; margin: 3px 0 2px 0; }
+        .brand-logo-sub { color: var(--primary); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.55rem; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
+        .brand-logo-sub2 { display: flex; align-items: center; gap: 5px; color: white; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.45rem; letter-spacing: 2px; margin-top: 2px; }
+        .brand-logo-sub2 .line { height: 1px; width: 12px; background: var(--primary); }
+        
         nav ul { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
         nav a { color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; transition: var(--transition); cursor: pointer; }
         nav a:hover, nav a.active { color: var(--primary); }
@@ -47,11 +57,6 @@
 
         .search-bar { display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 0.3rem 1rem; }
         .search-bar input { background: transparent; border: none; color: white; outline: none; padding: 0.3rem; width: 150px; }
-
-        .hero { height: 80vh; background: linear-gradient(to top, var(--bg-dark) 0%, rgba(7,9,19,0.3) 100%), url('https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=2090&auto=format&fit=crop') center/cover; display: flex; align-items: center; padding: 0 5%; position: relative; }
-        .hero-content { max-width: 800px; z-index: 2; }
-        .hero h1 { font-size: 5rem; line-height: 1.1; margin-bottom: 1rem; text-shadow: 2px 4px 10px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem; }
 
         .btn { padding: 0.8rem 2rem; border-radius: 30px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition); text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; color: white; }
         .btn-primary { background: var(--primary); }
@@ -66,13 +71,6 @@
         .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; }
         .section-header h2 { font-size: 2.5rem; }
         
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-        .dash-card { padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem; transition: var(--transition); }
-        .dash-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .dash-icon { font-size: 2.5rem; color: var(--primary); }
-        .dash-info h4 { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.3rem; }
-        .dash-info h3 { font-size: 1.5rem; }
-
         .filters { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
         .filter-select { background: var(--glass-bg); color: white; border: 1px solid var(--glass-border); padding: 0.5rem 1rem; border-radius: 8px; outline: none; cursor: pointer; }
 
@@ -187,7 +185,6 @@
         .socials a:hover { color: var(--primary); transform: translateY(-3px); }
 
         @media (max-width: 992px) {
-            .hero h1 { font-size: 3.5rem; }
             .admin-grid { grid-template-columns: 1fr; }
             .article-body { grid-template-columns: 1fr; }
         }
@@ -196,19 +193,122 @@
             nav ul { position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-panel); flex-direction: column; padding: 1rem 0; gap: 0; border-bottom: 1px solid var(--glass-border); clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); transition: var(--transition); }
             nav ul.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
             nav ul li { text-align: center; padding: 1rem 0; }
-            .hero h1 { font-size: 2.5rem; }
             .match-score { font-size: 1.5rem; }
             .player-hero { flex-direction: column; text-align: center; }
-            .profile-edit-grid { grid-template-columns: 1fr !important; }
         }
+
+        /* --- ESTILOS EXCLUSIVOS DEL NUEVO INICIO (HOME) --- */
+        #view-home { padding: 0 !important; }
+        
+        .abam-hero { min-height: 80vh; background: linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.95) 100%), url('https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=2090&auto=format&fit=crop') center/cover; display: flex; align-items: center; padding: 4rem 5%; position: relative; border-bottom: 1px solid var(--glass-border); }
+        .abam-hero-container { width: 100%; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; z-index: 2; flex-wrap: wrap; gap: 3rem; }
+        .abam-hero-left { flex: 1; min-width: 320px; max-width: 650px; }
+        .abam-hero-left h1 { font-family: 'Montserrat', sans-serif; font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; text-transform: uppercase; color: white; text-shadow: 2px 4px 10px rgba(0,0,0,0.8); }
+        .abam-hero-left h1 .text-accent { color: var(--primary); display: block; }
+        .abam-hero-left p { font-size: 1.4rem; color: #e2e8f0; margin-bottom: 2.5rem; line-height: 1.4; font-weight: 300; text-shadow: 1px 2px 5px rgba(0,0,0,0.8); }
+        .abam-hero-buttons { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .abam-btn { padding: 0.9rem 2rem; border-radius: 4px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: var(--transition); text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; letter-spacing: 0.5px; }
+        .abam-btn-primary { background: var(--primary); color: white; border: 2px solid var(--primary); }
+        .abam-btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3); }
+        .abam-btn-outline { background: transparent; color: white; border: 2px solid white; }
+        .abam-btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        .abam-hero-right { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 320px; text-align: center; }
+        .abam-logo-large { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .abam-logo-text { font-family: 'Montserrat', sans-serif; font-size: 8rem; font-weight: 900; color: white; line-height: 1; letter-spacing: -2px; text-transform: uppercase; text-shadow: 0 10px 20px rgba(0,0,0,0.8); }
+        .abam-logo-graphic { width: 80px; height: 40px; overflow: hidden; position: relative; margin-top: -15px; }
+        .abam-logo-graphic i { font-size: 80px; color: var(--primary); position: absolute; top: 0; left: 0; line-height: 1; }
+        .abam-logo-divider { width: 100%; max-width: 400px; height: 2px; background: var(--primary); margin: 0.5rem 0 1.5rem 0; }
+        .abam-logo-sub1 { color: var(--primary); font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: 2px; }
+        .abam-logo-sub2 { color: white; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.8rem; letter-spacing: 12px; margin-top: 0.5rem; margin-right: -12px; }
+        .abam-logo-motto { margin-top: 1.5rem; color: white; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 2px; }
+        .abam-logo-motto .dot { color: var(--primary); margin: 0 0.8rem; }
+
+        .home-content { padding: 0 5%; max-width: 1500px; margin: 0 auto; }
+        
+        .home-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: -3.5rem; position: relative; z-index: 10; margin-bottom: 4rem; }
+        .home-stat-card { background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-top: 3px solid var(--primary); padding: 1.5rem 1rem; text-align: center; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+        .home-stat-value { font-size: 1.8rem; font-family: 'Montserrat', sans-serif; font-weight: 900; color: white; margin-bottom: 0.3rem; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .home-stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+        .home-grid { display: grid; grid-template-columns: 2.2fr 1fr; gap: 4rem; }
+        .home-section-title { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; text-transform: uppercase; border-bottom: 2px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: flex-end; }
+        
+        .home-match-card { display: flex; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 8px; margin-bottom: 1rem; transition: var(--transition); cursor:pointer; }
+        .home-match-card:hover { background: rgba(255,255,255,0.05); border-color: var(--primary); transform: translateX(5px); }
+        .hmc-date { background: rgba(0,0,0,0.4); padding: 1.2rem; display: flex; flex-direction: column; justify-content: center; align-items: center; border-right: 1px solid var(--glass-border); min-width: 90px; }
+        .hmc-date span:first-child { font-size: 1.4rem; font-weight: 900; color: var(--primary); }
+        .hmc-date span:last-child { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); font-weight:bold; margin-top:5px; }
+        .hmc-teams { flex: 1; padding: 1.2rem; display: flex; flex-direction: column; justify-content: center; gap: 0.8rem; }
+        .hmc-team { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size:1.1rem; }
+        .hmc-team img { width: 30px; height: 30px; object-fit: contain; }
+        .hmc-info { padding: 1.2rem; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; font-size: 0.85rem; color: var(--text-muted); text-align: right; }
+        
+        .home-result-score { font-family: 'Montserrat'; font-weight: 900; font-size: 1.3rem; margin-left: auto; }
+        .winner { color: white; font-weight: 800; }
+        .loser { color: var(--text-muted); }
+
+        .home-player-card { display: flex; align-items: center; gap: 1rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--primary); border-top: 1px solid var(--glass-border); border-right: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); transition: var(--transition); }
+        .home-player-card:hover { transform: translateX(5px); background: rgba(255,255,255,0.05); }
+        .home-player-card img { width: 55px; height: 55px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); object-fit:cover; }
+        .hpc-info h4 { font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .hpc-info p { font-size: 0.8rem; color: var(--text-muted); }
+        .hpc-stat { margin-left: auto; text-align: right; }
+        .hpc-stat span:first-child { display: block; font-size: 1.8rem; font-weight: 900; font-family: 'Montserrat'; color: var(--primary); line-height: 1; }
+        .hpc-stat span:last-child { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight:bold; margin-top:2px; display:block; }
+
+        .home-teams-marquee { display: flex; gap: 2rem; overflow-x: auto; padding: 1.5rem 0; scrollbar-width: none; align-items: center; justify-content: flex-start;}
+        .home-teams-marquee::-webkit-scrollbar { display: none; }
+        .home-team-logo { flex: 0 0 100px; height: 100px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: var(--transition); padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .home-team-logo:hover { border-color: var(--primary); transform: scale(1.1); box-shadow: 0 8px 25px rgba(249,115,22,0.3); }
+        .home-team-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+        .sponsors-section { background: var(--bg-panel); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); padding: 3rem 0; margin-top: 5rem; overflow: hidden; }
+        .sponsor-marquee { width: 100%; overflow: hidden; white-space: nowrap; }
+        .sponsor-track { display: inline-flex; gap: 5rem; animation: marquee 25s linear infinite; align-items: center; }
+        .sponsor-track i { font-size: 4rem; color: rgba(255,255,255,0.2); transition: var(--transition); cursor: pointer; }
+        .sponsor-track i:hover { color: var(--primary); transform: scale(1.1); }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .home-cta { background: linear-gradient(135deg, rgba(249,115,22,0.2) 0%, rgba(7,9,19,1) 100%), url('https://images.unsplash.com/photo-1519861531473-9200262188bf?q=80&w=2071&auto=format&fit=crop') center/cover; padding: 5rem 2rem; border-radius: 12px; text-align: center; border: 1px solid var(--glass-border); position: relative; overflow: hidden; margin-top: 5rem; margin-bottom: 3rem; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .home-cta::before { content:''; position:absolute; top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75); z-index:1; }
+        .home-cta-content { position: relative; z-index: 2; }
+
+        @media (max-width: 992px) {
+            .abam-hero-container { flex-direction: column; text-align: center; }
+            .abam-hero-left { display: flex; flex-direction: column; align-items: center; }
+            .abam-hero-left h1 { font-size: 3.5rem; }
+            .home-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .hmc-info { display: none; } /* Ocultar info en mobile para ahorrar espacio */
+        }
+        @media (max-width: 768px) {
+            .abam-hero-left h1 { font-size: 2.5rem; }
+            .abam-logo-text { font-size: 5.5rem !important; }
+            .abam-logo-sub1 { font-size: 0.9rem !important; }
+            .abam-logo-sub2 { font-size: 1.2rem !important; letter-spacing: 8px !important; margin-right: -8px !important; }
+            .abam-logo-graphic { width: 60px !important; height: 30px !important; margin-top: -10px !important; }
+            .abam-logo-graphic i { font-size: 60px !important; }
+            .abam-logo-motto { font-size: 0.75rem !important; letter-spacing: 1px !important; }
+            .abam-logo-motto .dot { margin: 0 0.4rem !important; }
+            .home-stat-value { font-size: 1.5rem; }
+            .home-cta { padding: 3rem 1.5rem; }
+            .home-cta-content h2 { font-size: 2rem !important; }
+        }
+        /* --- FIN ESTILOS EXCLUSIVOS HOME --- */
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo title-font text-accent" onclick="navigate('home')">
-            <i class="fa-solid fa-basketball"></i> LIGA PRO
+        <div class="brand-logo" onclick="navigate('home')">
+            <div class="brand-logo-top">
+                <div class="brand-logo-text">ABAM</div>
+                <div class="brand-logo-icon"><i class="fa-solid fa-basketball"></i></div>
+            </div>
+            <div class="brand-logo-divider"></div>
+            <div class="brand-logo-sub">Liga de Básquet Amateur</div>
+            <div class="brand-logo-sub2"><span class="line"></span> MALDONADO <span class="line"></span></div>
         </div>
+
         <nav>
             <ul id="nav-menu">
                 <li><a onclick="navigate('home')" class="active" data-target="home">Inicio</a></li>
@@ -217,9 +317,7 @@
                 <li><a onclick="navigate('teams')" data-target="teams">Equipos</a></li>
                 <li><a onclick="navigate('stats')" data-target="stats">Líderes</a></li>
                 <li><a onclick="navigate('playoffs')" data-target="playoffs">Playoffs</a></li>
-                
                 <li id="nav-admin" class="hidden"><a onclick="navigate('admin')" data-target="admin" style="color: #94a3b8;"><i class="fa-solid fa-gear"></i> Admin</a></li>
-                
                 <li id="nav-login-btn"><a onclick="showLogin()" style="color: var(--primary);"><i class="fa-solid fa-user"></i> Acceso Admin</a></li>
             </ul>
         </nav>
@@ -233,55 +331,135 @@
     </header>
 
     <main id="main-content">
-        <!-- VISTA INICIO -->
+        <!-- VISTA INICIO (COMPLETAMENTE REDISEÑADA) -->
         <section id="view-home" class="view-section slide-up">
-            <div class="hero glass" style="margin-bottom: 3rem;">
-                <div class="hero-content">
-                    <h1 class="title-font">Temporada <span class="text-accent">Nueva</span><br>Está por Comenzar</h1>
-                    <p>La liga está lista. 14 fechas apasionantes a doble rueda para definir quiénes entran a los Playoffs. Todo empieza desde cero.</p>
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <button class="btn btn-primary" onclick="navigate('fixture')">Ver Fixture <i class="fa-solid fa-calendar"></i></button>
+            
+            <div class="abam-hero">
+                <div class="abam-hero-container">
+                    <div class="abam-hero-left">
+                        <h1 class="title-font">
+                            VIVÍ LA PASIÓN<br>
+                            <span class="text-accent">DEL BÁSQUET AMATEUR</span>
+                        </h1>
+                        <p>
+                            ABAM es más que una liga,<br>
+                            es una comunidad que crece cada día.
+                        </p>
+                        <div class="abam-hero-buttons">
+                            <button class="abam-btn abam-btn-primary" onclick="navigate('fixture')">
+                                VER FIXTURE <i class="fa-regular fa-calendar"></i>
+                            </button>
+                            <button class="abam-btn abam-btn-outline" onclick="navigate('standings')">
+                                <i class="fa-solid fa-chart-simple"></i> VER POSICIONES
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="abam-hero-right">
+                        <div class="abam-logo-large">
+                            <div class="abam-logo-text">ABAM</div>
+                            <div class="abam-logo-graphic"><i class="fa-solid fa-basketball"></i></div>
+                        </div>
+                        <div class="abam-logo-divider"></div>
+                        <div class="abam-logo-sub1">LIGA DE BÁSQUET AMATEUR</div>
+                        <div class="abam-logo-sub2">M A L D O N A D O</div>
+                        <div class="abam-logo-motto">COMPETENCIA <span class="dot">•</span> RESPETO <span class="dot">•</span> PASIÓN</div>
                     </div>
                 </div>
             </div>
 
-            <div class="dashboard-grid">
-                <div class="dash-card glass">
-                    <i class="fa-solid fa-shield-halved dash-icon"></i>
-                    <div class="dash-info">
-                        <h4>Equipos Participantes</h4>
-                        <h3 id="dash-teams-count">0</h3>
-                    </div>
-                </div>
-                <div class="dash-card glass">
-                    <i class="fa-solid fa-stopwatch dash-icon"></i>
-                    <div class="dash-info">
-                        <h4>Partidos Jugados</h4>
-                        <h3 id="dash-games-count">0</h3>
-                    </div>
-                </div>
-                <div class="dash-card glass">
-                    <i class="fa-solid fa-trophy dash-icon"></i>
-                    <div class="dash-info">
-                        <h4>Último Campeón</h4>
-                        <h3>Titanes BC</h3>
-                    </div>
-                </div>
-                <div class="dash-card glass">
-                    <i class="fa-solid fa-basketball dash-icon"></i>
-                    <div class="dash-info">
-                        <h4>Fase Regular</h4>
-                        <h3>14 Fechas</h3>
-                    </div>
-                </div>
-            </div>
+            <div class="home-content">
+                <!-- RESUMEN EN TARJETAS -->
+                <div class="home-summary-grid" id="home-summary"></div>
 
-            <div class="section-header">
-                <h2 class="title-font">Últimas <span class="text-accent">Noticias</span></h2>
+                <div class="home-grid">
+                    <!-- COLUMNA PRINCIPAL (70%) -->
+                    <div class="home-main">
+                        <div class="home-section-title">
+                            <h2>Próxima <span class="text-accent">Fecha</span></h2>
+                            <button class="btn btn-secondary btn-small" onclick="navigate('fixture')">Ver Fixture Completo</button>
+                        </div>
+                        <div id="home-next-matches"></div>
+
+                        <div class="home-section-title" style="margin-top: 4rem;">
+                            <h2>Últimos <span class="text-accent">Resultados</span></h2>
+                        </div>
+                        <div id="home-last-results"></div>
+
+                        <div class="home-section-title" style="margin-top: 4rem;">
+                            <h2>Noticias <span class="text-accent">Destacadas</span></h2>
+                        </div>
+                        <div class="news-grid" id="news-container"></div>
+                    </div>
+
+                    <!-- COLUMNA LATERAL (30%) -->
+                    <div class="home-side">
+                        <div class="home-section-title">
+                            <h2>Tabla <span class="text-accent">Posiciones</span></h2>
+                        </div>
+                        <div class="glass" style="padding:1.5rem; border-radius:12px;">
+                            <table style="width:100%; text-align:center; font-size:0.9rem;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding-bottom:1rem; color:var(--text-muted);">#</th>
+                                        <th style="padding-bottom:1rem; color:var(--text-muted); text-align:left;">EQUIPO</th>
+                                        <th style="padding-bottom:1rem; color:var(--text-muted);">PJ</th>
+                                        <th style="padding-bottom:1rem; color:var(--text-muted);">PTS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="home-standings-body"></tbody>
+                            </table>
+                            <button class="btn btn-secondary" style="width:100%; margin-top:1.5rem;" onclick="navigate('standings')">VER TABLA COMPLETA</button>
+                        </div>
+
+                        <div class="home-section-title" style="margin-top: 4rem;">
+                            <h2>Jugadores <span class="text-accent">Destacados</span></h2>
+                        </div>
+                        <div id="home-top-players"></div>
+                    </div>
+                </div>
+
+                <!-- EQUIPOS MARQUEE -->
+                <div class="home-section-title" style="margin-top: 4rem;">
+                    <h2>Nuestros <span class="text-accent">Equipos</span></h2>
+                    <button class="btn btn-secondary btn-small" onclick="navigate('teams')">Ver Todos</button>
+                </div>
+                <div id="home-teams-grid" class="home-teams-marquee"></div>
+
+                <!-- SPONSORS -->
+                <div class="sponsors-section">
+                    <h3 style="text-align:center; color:var(--text-muted); margin-bottom: 2.5rem; letter-spacing:4px; font-weight:800;">SPONSORS OFICIALES</h3>
+                    <div class="sponsor-marquee">
+                        <div class="sponsor-track">
+                            <i class="fa-brands fa-aws"></i>
+                            <i class="fa-brands fa-nike"></i>
+                            <i class="fa-brands fa-redbull"></i>
+                            <i class="fa-brands fa-playstation"></i>
+                            <i class="fa-brands fa-steam"></i>
+                            <i class="fa-brands fa-xbox"></i>
+                            <i class="fa-brands fa-twitch"></i>
+                            <!-- Duplicados para el bucle continuo -->
+                            <i class="fa-brands fa-aws"></i>
+                            <i class="fa-brands fa-nike"></i>
+                            <i class="fa-brands fa-redbull"></i>
+                            <i class="fa-brands fa-playstation"></i>
+                            <i class="fa-brands fa-steam"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="home-cta">
+                    <div class="home-cta-content">
+                        <h2 style="font-family:'Montserrat'; font-size:3.5rem; font-weight:900; margin-bottom:1rem; text-transform:uppercase;">Viví el básquet <span class="text-accent">al máximo</span></h2>
+                        <p style="font-size:1.3rem; color:#e2e8f0; margin-bottom:2.5rem; max-width:650px; margin-left:auto; margin-right:auto;">Acompaña a tus equipos favoritos, revisa las estadísticas en tiempo real y no te pierdas ningún detalle de la liga ABAM.</p>
+                        <button class="abam-btn abam-btn-primary" style="font-size:1.1rem; padding: 1.2rem 3.5rem;" onclick="navigate('fixture')">EXPLORAR LA LIGA</button>
+                    </div>
+                </div>
             </div>
-            <div class="news-grid" id="news-container"></div>
         </section>
 
+        <!-- RESTO DE VISTAS (SIN CAMBIOS) -->
         <!-- VISTA FIXTURE -->
         <section id="view-fixture" class="view-section hidden">
             <div class="section-header">
@@ -368,7 +546,6 @@
             </div>
             <div class="admin-grid">
                 
-                <!-- GESTIÓN DE PARTIDOS -->
                 <div class="glass admin-form">
                     <h3>Cargar/Editar Resultado</h3>
                     <p style="color: var(--text-muted); font-size: 0.8rem;">Modifica marcadores. La tabla y playoffs se recalcularán solos.</p>
@@ -392,7 +569,6 @@
                     </div>
                 </div>
 
-                <!-- GESTIÓN DE NOTICIAS -->
                 <div class="glass admin-form">
                     <h3 id="admin-news-header">Crear/Editar Noticia</h3>
                     <input type="hidden" id="admin-news-id">
@@ -424,7 +600,6 @@
                     </div>
                 </div>
 
-                <!-- GESTIÓN DE EQUIPOS (Simplificado) -->
                 <div class="glass admin-form">
                     <h3>Editar Equipo</h3>
                     <p style="color: var(--text-muted); font-size: 0.8rem;">Modifica la información básica del equipo.</p>
@@ -446,7 +621,6 @@
                     </div>
                 </div>
 
-                <!-- GESTIÓN DE JUGADORES (Simplificado) -->
                 <div class="glass admin-form">
                     <h3>Editar Jugador</h3>
                     <p style="color: var(--text-muted); font-size: 0.8rem;">Modifica los datos del jugador.</p>
@@ -474,7 +648,6 @@
                     </div>
                 </div>
 
-                <!-- CARGA DE ESTADÍSTICAS -->
                 <div class="glass admin-form" style="grid-column: 1 / -1;">
                     <h3>Cargar Estadísticas del Partido</h3>
                     <p style="color: var(--text-muted); font-size: 0.8rem;">Ingresa manualmente los puntos, rebotes y asistencias por jugador para calcular los promedios.</p>
@@ -517,10 +690,8 @@
                         <button class="btn btn-danger" style="flex:1; justify-content:center;" onclick="adminClearStatsForm()">Resetear</button>
                     </div>
                 </div>
-
             </div>
 
-            <!-- LISTA DE NOTICIAS PARA EDITAR -->
             <div class="glass" style="margin-top:2rem; padding:2rem;">
                 <h3>Noticias Publicadas (Editar / Borrar)</h3>
                 <div id="admin-news-list" style="margin-top:1rem;"></div>
@@ -528,29 +699,20 @@
         </section>
     </main>
 
-    <!-- MODAL AUTH -->
+    <!-- MODALES Y FOOTER -->
     <div class="modal" id="login-modal">
         <div class="modal-content modal-small glass">
             <i class="fa-solid fa-xmark close-modal" onclick="closeLogin()"></i>
-            
             <div style="padding: 1rem;">
                 <h3 style="margin-bottom:1rem; text-align:center;">Ingreso Administrador</h3>
-                <div class="form-group">
-                    <label>Usuario</label>
-                    <input type="text" class="form-control" id="login-admin-user" placeholder="admin">
-                </div>
-                <div class="form-group" style="margin-top: 1rem;">
-                    <label>Contraseña</label>
-                    <input type="password" class="form-control" id="login-admin-pass" placeholder="admin">
-                </div>
+                <div class="form-group"><label>Usuario</label><input type="text" class="form-control" id="login-admin-user" placeholder="admin"></div>
+                <div class="form-group" style="margin-top: 1rem;"><label>Contraseña</label><input type="password" class="form-control" id="login-admin-pass" placeholder="admin"></div>
                 <button class="btn btn-primary" style="width: 100%; justify-content:center; margin-top:1.5rem;" onclick="doLoginAdmin()">Entrar Panel</button>
-                
                 <p id="login-error" style="color:var(--danger); font-size:0.8rem; margin-top:1rem; text-align:center; display:none;">Error.</p>
             </div>
         </div>
     </div>
 
-    <!-- MODAL EQUIPO -->
     <div class="modal" id="team-modal">
         <div class="modal-content glass">
             <i class="fa-solid fa-xmark close-modal" onclick="closeModal('team-modal')"></i>
@@ -558,7 +720,6 @@
         </div>
     </div>
 
-    <!-- MODAL JUGADOR -->
     <div class="modal" id="player-modal">
         <div class="modal-content glass" style="max-width: 600px;">
             <i class="fa-solid fa-xmark close-modal" onclick="closeModal('player-modal')"></i>
@@ -567,36 +728,26 @@
     </div>
 
     <footer>
-        <div class="logo flex-center title-font text-accent" style="font-size: 1.5rem; justify-content: center;">
-            <i class="fa-solid fa-basketball"></i> LIGA PRO
+        <div class="brand-logo" onclick="navigate('home')" style="margin: 0 auto; margin-bottom: 1.5rem;">
+            <div class="brand-logo-top"><div class="brand-logo-text">ABAM</div><div class="brand-logo-icon"><i class="fa-solid fa-basketball"></i></div></div>
+            <div class="brand-logo-divider"></div>
+            <div class="brand-logo-sub">Liga de Básquet Amateur</div>
+            <div class="brand-logo-sub2"><span class="line"></span> MALDONADO <span class="line"></span></div>
         </div>
-        <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.9rem;">Plataforma oficial de gestión y estadísticas de baloncesto.</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Plataforma oficial de gestión y estadísticas de baloncesto.</p>
     </footer>
 
     <script>
         // ESTADO Y PERSISTENCIA
         let state = {};
-        let currentUser = null; // { role: 'admin' }
+        let currentUser = null;
 
-        function saveState() {
-            localStorage.setItem('ligaProState_v4_admin', JSON.stringify(state));
-        }
-
+        function saveState() { localStorage.setItem('ligaProState_v4_admin', JSON.stringify(state)); }
         function loadState() {
             const stored = localStorage.getItem('ligaProState_v4_admin');
-            if (stored) {
-                state = JSON.parse(stored);
-            } else {
-                generateInitialState();
-                saveState();
-            }
-            
-            // Re-login from session storage
+            if (stored) { state = JSON.parse(stored); } else { generateInitialState(); saveState(); }
             const sess = sessionStorage.getItem('ligaProSession');
-            if(sess) {
-                currentUser = JSON.parse(sess);
-                updateNavAuth();
-            }
+            if(sess) { currentUser = JSON.parse(sess); updateNavAuth(); }
         }
 
         function generateInitialState() {
@@ -611,213 +762,198 @@
                     { id: 'T7', name: 'Meteoros', city: 'Sur', coach: 'F. Castro', logo: 'https://ui-avatars.com/api/?name=ME&background=f97316&color=fff&rounded=true&bold=true&size=128', color: '#f97316', court: 'Domo Meteoro' },
                     { id: 'T8', name: 'Gladiadores', city: 'Este', coach: 'D. Ortiz', logo: 'https://ui-avatars.com/api/?name=GL&background=64748b&color=fff&rounded=true&bold=true&size=128', color: '#64748b', court: 'Arena Gladiador' }
                 ],
-                players: [],
-                matches: [],
-                news: [
-                    { id: 1, title: 'Presentación de la Nueva Temporada', date: '10 Jul 2026', summary: 'La liga arranca con todo. 8 equipos en 14 fechas.', img: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80', fullText: 'Formato de todos contra todos a doble rueda. Todos los equipos comienzan en cero.', potmPlayerId: '' }
-                ],
+                players: [], matches: [],
+                news: [ { id: 1, title: 'Presentación de la Nueva Temporada', date: '10 Jul 2026', summary: 'La liga arranca con todo. 8 equipos en 14 fechas.', img: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80', fullText: 'Formato de todos contra todos a doble rueda. Todos los equipos comienzan en cero.', potmPlayerId: '' } ],
                 standings: []
             };
-
             const positions = ['Base', 'Escolta', 'Alero', 'Ala-Pívot', 'Pívot'];
-            state.teams.forEach(t => {
-                for(let i=1; i<=8; i++) {
-                    state.players.push({
-                        id: t.id + '_P' + i,
-                        teamId: t.id,
-                        name: `Jugador ${i} ${t.name.split(' ')[0]}`,
-                        number: Math.floor(Math.random()*99)+1,
-                        pos: positions[i%5],
-                        age: '24',
-                        height: '1.80m',
-                        stats: { pts: 0, reb: 0, ast: 0, pj: 0 }, 
-                        img: `https://ui-avatars.com/api/?name=J${i}&background=random`
-                    });
-                }
-            });
-
-            let matchId = 1;
-            let t = state.teams.map(team => team.id);
-            let n = t.length;
+            state.teams.forEach(t => { for(let i=1; i<=8; i++) { state.players.push({ id: t.id + '_P' + i, teamId: t.id, name: `Jugador ${i} ${t.name.split(' ')[0]}`, number: Math.floor(Math.random()*99)+1, pos: positions[i%5], age: '24', height: '1.80m', stats: { pts: 0, reb: 0, ast: 0, pj: 0 }, img: `https://ui-avatars.com/api/?name=J${i}&background=random` }); } });
+            let matchId = 1; let t = state.teams.map(team => team.id); let n = t.length;
             for(let round = 1; round <= 14; round++) {
-                let isReturn = round > 7;
-                let r = isReturn ? round - 7 : round;
-                let current = [...t];
-                let first = current.shift();
-                for(let k=0; k < r - 1; k++) current.unshift(current.pop());
-                current.unshift(first);
-
-                for(let i=0; i < n/2; i++) {
-                    let home = isReturn ? current[n - 1 - i] : current[i];
-                    let away = isReturn ? current[i] : current[n - 1 - i];
-                    state.matches.push({
-                        id: 'M' + matchId++, date: round.toString(), home: home, away: away,
-                        homeScore: 0, awayScore: 0, status: 'scheduled',
-                        court: state.teams.find(tm=>tm.id===home).court, time: '20:00',
-                        playerStats: {} 
-                    });
-                }
+                let isReturn = round > 7; let r = isReturn ? round - 7 : round; let current = [...t]; let first = current.shift();
+                for(let k=0; k < r - 1; k++) current.unshift(current.pop()); current.unshift(first);
+                for(let i=0; i < n/2; i++) { let home = isReturn ? current[n - 1 - i] : current[i]; let away = isReturn ? current[i] : current[n - 1 - i]; state.matches.push({ id: 'M' + matchId++, date: round.toString(), home: home, away: away, homeScore: 0, awayScore: 0, status: 'scheduled', court: state.teams.find(tm=>tm.id===home).court, time: '20:00', playerStats: {} }); }
             }
         }
 
-        // INIT CORE
         function init() {
-            loadState();
-            recalculateAllData();
-            setupFilters();
-            renderDashboard();
-            renderFixture();
-            renderStandings();
-            renderTeams();
-            renderNews();
-            renderStats();
-            renderBracket();
-            populateAdminSelects();
+            loadState(); recalculateAllData(); setupFilters(); renderDashboard(); renderFixture(); renderStandings(); renderTeams(); renderNews(); renderStats(); renderBracket(); populateAdminSelects();
         }
 
-        // UTILIDADES
         function getTeam(id) { return state.teams.find(t => t.id === id); }
         function getPlayer(id) { return state.players.find(p => p.id === id); }
-        function showMsg(msg, isError=true) {
-            const el = document.getElementById('login-error');
-            el.style.display = 'block';
-            el.style.color = isError ? 'var(--danger)' : 'var(--success)';
-            el.innerText = msg;
-        }
-
-        // AUTH & NAVIGATION
+        function showMsg(msg, isError=true) { const el = document.getElementById('login-error'); el.style.display = 'block'; el.style.color = isError ? 'var(--danger)' : 'var(--success)'; el.innerText = msg; }
         function navigate(viewId) {
-            // Protección exclusiva para administrador
             if(viewId === 'admin' && (!currentUser || currentUser.role !== 'admin')) { showLogin(); return; }
-            
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             const target = document.getElementById(`view-${viewId}`);
-            if(target) {
-                target.classList.remove('hidden');
-                target.classList.add('fade-in');
-            }
+            if(target) { target.classList.remove('hidden'); target.classList.add('fade-in'); }
             document.querySelectorAll('nav a').forEach(el => el.classList.remove('active'));
             const activeLink = document.querySelector(`nav a[data-target="${viewId}"]`);
             if(activeLink) activeLink.classList.add('active');
-            
             if(window.innerWidth <= 768) document.getElementById('nav-menu').classList.remove('active');
             window.scrollTo(0, 0);
         }
-
         function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
-
         function showLogin() { 
-            if(currentUser) {
-                currentUser = null;
-                sessionStorage.removeItem('ligaProSession');
-                updateNavAuth();
-                navigate('home');
-            } else {
-                document.getElementById('login-modal').classList.add('active'); 
-                document.getElementById('login-error').style.display = 'none';
-                document.getElementById('login-admin-user').value = '';
-                document.getElementById('login-admin-pass').value = '';
-            }
+            if(currentUser) { currentUser = null; sessionStorage.removeItem('ligaProSession'); updateNavAuth(); navigate('home'); } 
+            else { document.getElementById('login-modal').classList.add('active'); document.getElementById('login-error').style.display = 'none'; document.getElementById('login-admin-user').value = ''; document.getElementById('login-admin-pass').value = ''; }
         }
         function closeLogin() { document.getElementById('login-modal').classList.remove('active'); }
-
         function updateNavAuth() {
             document.getElementById('nav-admin').classList.add('hidden');
-            
-            if(currentUser && currentUser.role === 'admin') {
-                document.getElementById('nav-admin').classList.remove('hidden');
-                document.getElementById('nav-login-btn').innerHTML = `<a onclick="showLogin()" style="color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>`;
-            } else {
-                document.getElementById('nav-login-btn').innerHTML = `<a onclick="showLogin()" style="color: var(--primary);"><i class="fa-solid fa-user"></i> Acceso Admin</a>`;
-            }
+            if(currentUser && currentUser.role === 'admin') { document.getElementById('nav-admin').classList.remove('hidden'); document.getElementById('nav-login-btn').innerHTML = `<a onclick="showLogin()" style="color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>`; } 
+            else { document.getElementById('nav-login-btn').innerHTML = `<a onclick="showLogin()" style="color: var(--primary);"><i class="fa-solid fa-user"></i> Acceso Admin</a>`; }
         }
-
         function doLoginAdmin() {
-            const u = document.getElementById('login-admin-user').value;
-            const p = document.getElementById('login-admin-pass').value;
-            
-            // Hardcoded admin account
-            if(u === 'admin' && p === 'admin') {
-                currentUser = { role: 'admin' };
-                sessionStorage.setItem('ligaProSession', JSON.stringify(currentUser));
-                closeLogin(); 
-                updateNavAuth(); 
-                navigate('admin');
-            } else {
-                showMsg('Credenciales incorrectas');
-            }
+            const u = document.getElementById('login-admin-user').value; const p = document.getElementById('login-admin-pass').value;
+            if(u === 'admin' && p === 'admin') { currentUser = { role: 'admin' }; sessionStorage.setItem('ligaProSession', JSON.stringify(currentUser)); closeLogin(); updateNavAuth(); navigate('admin'); } else { showMsg('Credenciales incorrectas'); }
         }
 
-        // RECALCULAR TODO
         function recalculateAllData() {
             state.standings = state.teams.map(t => ({...t, pj:0, pg:0, pp:0, pf:0, pc:0, diff:0, pts:0}));
             state.players.forEach(p => { p.stats = { pts: 0, reb: 0, ast: 0, pj: 0 }; });
-
             state.matches.forEach(m => {
                 if(m.status === 'final') {
-                    let home = state.standings.find(s => s.id === m.home);
-                    let away = state.standings.find(s => s.id === m.away);
-                    home.pj++; away.pj++;
-                    home.pf += m.homeScore; home.pc += m.awayScore;
-                    away.pf += m.awayScore; away.pc += m.homeScore;
-                    
-                    if(m.homeScore > m.awayScore) { home.pg++; home.pts += 2; away.pp++; away.pts += 1; } 
-                    else { away.pg++; away.pts += 2; home.pp++; home.pts += 1; }
-
-                    if(m.playerStats) {
-                        for(const [pid, s] of Object.entries(m.playerStats)) {
-                            const p = getPlayer(pid);
-                            if(p) { 
-                                p.stats.pts += s.pts; 
-                                p.stats.reb += s.reb; 
-                                p.stats.ast += s.ast; 
-                                p.stats.pj += 1;
-                            }
-                        }
-                    }
+                    let home = state.standings.find(s => s.id === m.home); let away = state.standings.find(s => s.id === m.away);
+                    home.pj++; away.pj++; home.pf += m.homeScore; home.pc += m.awayScore; away.pf += m.awayScore; away.pc += m.homeScore;
+                    if(m.homeScore > m.awayScore) { home.pg++; home.pts += 2; away.pp++; away.pts += 1; } else { away.pg++; away.pts += 2; home.pp++; home.pts += 1; }
+                    if(m.playerStats) { for(const [pid, s] of Object.entries(m.playerStats)) { const p = getPlayer(pid); if(p) { p.stats.pts += s.pts; p.stats.reb += s.reb; p.stats.ast += s.ast; p.stats.pj += 1; } } }
                 }
             });
             state.standings.forEach(s => s.diff = s.pf - s.pc);
             state.standings.sort((a,b) => b.pts - a.pts || b.diff - a.diff);
         }
 
-        // RENDER VISTAS PÚBLICAS
+        // --- NUEVA LÓGICA RENDER DASHBOARD (HOME ABAM) ---
         function renderDashboard() {
-            document.getElementById('dash-teams-count').innerText = state.teams.length;
-            document.getElementById('dash-games-count').innerText = state.matches.filter(m => m.status === 'final').length;
+            const totalTeams = state.teams.length;
+            const totalPlayers = state.players.length;
+            const scheduled = state.matches.filter(m => m.status === 'scheduled');
+            const finalMatches = state.matches.filter(m => m.status === 'final');
+            const matchesPlayed = finalMatches.length;
+            
+            let nextMatchday = scheduled.length > 0 ? scheduled[0].date : 'PLAYOFFS';
+            let topResultStr = '-';
+            if(finalMatches.length > 0) {
+                let last = finalMatches[finalMatches.length-1];
+                let hName = getTeam(last.home).name.substring(0, 10);
+                let aName = getTeam(last.away).name.substring(0, 10);
+                topResultStr = `${hName} ${last.homeScore} - ${last.awayScore} ${aName}`;
+            }
+
+            // 1. Resumen
+            document.getElementById('home-summary').innerHTML = `
+                <div class="home-stat-card"><div class="home-stat-value">2026</div><div class="home-stat-label">Temporada</div></div>
+                <div class="home-stat-card"><div class="home-stat-value">${totalTeams}</div><div class="home-stat-label">Equipos</div></div>
+                <div class="home-stat-card"><div class="home-stat-value">${totalPlayers}</div><div class="home-stat-label">Jugadores</div></div>
+                <div class="home-stat-card"><div class="home-stat-value">${matchesPlayed}</div><div class="home-stat-label">PJ</div></div>
+                <div class="home-stat-card"><div class="home-stat-value" style="color:var(--primary);">F${nextMatchday}</div><div class="home-stat-label">Próxima Fecha</div></div>
+                <div class="home-stat-card"><div class="home-stat-value" style="font-size:1.1rem; padding-top:0.4rem;">${topResultStr}</div><div class="home-stat-label">Último Partido</div></div>
+            `;
+
+            // 2. Próximos Partidos
+            let nextMatchesHtml = scheduled.filter(m => m.date === nextMatchday).slice(0, 4).map(m => {
+                let h = getTeam(m.home); let a = getTeam(m.away);
+                return `<div class="home-match-card" onclick="navigate('fixture')">
+                    <div class="hmc-date"><span>F${m.date}</span><span>20:00</span></div>
+                    <div class="hmc-teams">
+                        <div class="hmc-team"><img src="${h.logo}"> ${h.name}</div>
+                        <div class="hmc-team"><img src="${a.logo}"> ${a.name}</div>
+                    </div>
+                    <div class="hmc-info">
+                        <span style="color:var(--primary); font-weight:900; margin-bottom:5px; font-size:0.75rem; letter-spacing:1px;">PROGRAMADO</span>
+                        <span><i class="fa-solid fa-location-dot"></i> ${m.court}</span>
+                    </div>
+                </div>`;
+            }).join('');
+            document.getElementById('home-next-matches').innerHTML = nextMatchesHtml || '<p class="text-muted">No hay partidos programados.</p>';
+
+            // 3. Últimos Resultados
+            let lastMatchesHtml = finalMatches.slice(-4).reverse().map(m => {
+                let h = getTeam(m.home); let a = getTeam(m.away);
+                let hW = m.homeScore > m.awayScore ? 'winner' : 'loser';
+                let aW = m.awayScore > m.homeScore ? 'winner' : 'loser';
+                return `<div class="home-match-card" onclick="navigate('fixture')">
+                    <div class="hmc-date"><span>F${m.date}</span><span>FINAL</span></div>
+                    <div class="hmc-teams">
+                        <div class="hmc-team ${hW}"><img src="${h.logo}"> ${h.name} <span class="home-result-score">${m.homeScore}</span></div>
+                        <div class="hmc-team ${aW}"><img src="${a.logo}"> ${a.name} <span class="home-result-score">${m.awayScore}</span></div>
+                    </div>
+                    <div class="hmc-info"><span style="color:var(--text-muted);"><i class="fa-solid fa-location-dot"></i> ${m.court}</span></div>
+                </div>`;
+            }).join('');
+            document.getElementById('home-last-results').innerHTML = lastMatchesHtml || '<p class="text-muted">Aún no hay resultados finales.</p>';
+
+            // 4. Posiciones (Mini)
+            document.getElementById('home-standings-body').innerHTML = state.standings.slice(0, 5).map((s, idx) => `
+                <tr>
+                    <td style="padding:1rem; border-bottom:1px solid var(--glass-border); font-weight:900; color:${idx<4?'var(--success)':'white'};">${idx+1}</td>
+                    <td style="padding:1rem; border-bottom:1px solid var(--glass-border); text-align:left; display:flex; align-items:center; gap:10px; font-weight:600;">
+                        <img src="${s.logo}" style="width:25px;"> ${s.name}
+                    </td>
+                    <td style="padding:1rem; border-bottom:1px solid var(--glass-border); color:var(--text-muted);">${s.pj}</td>
+                    <td style="padding:1rem; border-bottom:1px solid var(--glass-border); font-weight:900; color:var(--primary); font-family:'Montserrat'; font-size:1.1rem;">${s.pts}</td>
+                </tr>
+            `).join('');
+
+            // 5. Jugadores Destacados
+            let all = [...state.players].filter(p => p.stats.pj > 0);
+            const getAvg = (p, stat) => { let pj = p.stats.pj; return pj > 0 ? (p.stats[stat] / pj).toFixed(1) : "0.0"; };
+            let topPlayersHtml = '<p class="text-muted" style="margin-top:1rem;">Aún no hay estadísticas cargadas.</p>';
+            
+            if(all.length > 0) {
+                let topPts = [...all].sort((a,b) => parseFloat(getAvg(b,'pts')) - parseFloat(getAvg(a,'pts')))[0];
+                let topReb = [...all].sort((a,b) => parseFloat(getAvg(b,'reb')) - parseFloat(getAvg(a,'reb')))[0];
+                let topAst = [...all].sort((a,b) => parseFloat(getAvg(b,'ast')) - parseFloat(getAvg(a,'ast')))[0];
+                
+                let tops = [];
+                if(topPts) tops.push({ label: 'PUNTOS', p: topPts, val: getAvg(topPts,'pts') });
+                if(topReb) tops.push({ label: 'REBOTES', p: topReb, val: getAvg(topReb,'reb') });
+                if(topAst) tops.push({ label: 'ASISTENCIAS', p: topAst, val: getAvg(topAst,'ast') });
+
+                topPlayersHtml = tops.map(t => {
+                    let team = getTeam(t.p.teamId);
+                    return `<div class="home-player-card cursor-pointer" onclick="openPlayerModal('${t.p.id}')">
+                        <img src="${t.p.img}">
+                        <div class="hpc-info">
+                            <h4>${t.p.name}</h4>
+                            <p><img src="${team.logo}" style="width:12px; vertical-align:middle;"> ${team.name}</p>
+                        </div>
+                        <div class="hpc-stat">
+                            <span>${t.val}</span>
+                            <span>${t.label}</span>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+            document.getElementById('home-top-players').innerHTML = topPlayersHtml;
+
+            // 6. Equipos
+            document.getElementById('home-teams-grid').innerHTML = state.teams.map(t => 
+                `<div class="home-team-logo" onclick="navigate('teams'); setTimeout(()=>openTeamModal('${t.id}'), 300)" title="${t.name}">
+                    <img src="${t.logo}" alt="${t.name}">
+                </div>`
+            ).join('');
         }
+        // -------------------------------------------------------------
 
         function setupFilters() {
-            let dates = '';
-            for(let i=1; i<=14; i++) dates += `<option value="${i}">Fecha ${i}</option>`;
+            let dates = ''; for(let i=1; i<=14; i++) dates += `<option value="${i}">Fecha ${i}</option>`;
             document.getElementById('filter-date').innerHTML = '<option value="all">Todas las Fechas</option>' + dates;
             document.getElementById('filter-team').innerHTML = '<option value="all">Todos los Equipos</option>' + state.teams.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
         }
 
         function renderFixture() {
-            const dF = document.getElementById('filter-date').value;
-            const tF = document.getElementById('filter-team').value;
-            let f = state.matches;
-            if(dF !== 'all') f = f.filter(m => m.date === dF);
-            if(tF !== 'all') f = f.filter(m => m.home === tF || m.away === tF);
-
+            const dF = document.getElementById('filter-date').value; const tF = document.getElementById('filter-team').value;
+            let f = state.matches; if(dF !== 'all') f = f.filter(m => m.date === dF); if(tF !== 'all') f = f.filter(m => m.home === tF || m.away === tF);
             document.getElementById('fixture-container').innerHTML = f.map(m => {
-                const home = getTeam(m.home);
-                const away = getTeam(m.away);
-                let stC = m.status === 'final' ? 'status-final' : 'status-scheduled';
-                let stT = m.status === 'final' ? 'Finalizado' : 'Por Jugar';
+                const home = getTeam(m.home); const away = getTeam(m.away);
+                let stC = m.status === 'final' ? 'status-final' : 'status-scheduled'; let stT = m.status === 'final' ? 'Finalizado' : 'Por Jugar';
                 let scT = m.status === 'scheduled' ? `<span>0</span><span class="score-separator">-</span><span>0</span>` : `<span>${m.homeScore}</span><span class="score-separator">-</span><span>${m.awayScore}</span>`;
-
                 return `<div class="match-card glass">
-                    <div class="match-header">
-                        <span><i class="fa-solid fa-location-dot"></i> ${m.court} | Fecha ${m.date}</span>
-                        <span class="match-status ${stC}">${stT}</span>
-                    </div>
-                    <div class="match-teams">
-                        <div class="team" onclick="openTeamModal('${home.id}')"><img src="${home.logo}"> <span class="team-name">${home.name}</span></div>
-                        <div class="match-score">${scT}</div>
-                        <div class="team" onclick="openTeamModal('${away.id}')"><img src="${away.logo}"> <span class="team-name">${away.name}</span></div>
-                    </div>
+                    <div class="match-header"><span><i class="fa-solid fa-location-dot"></i> ${m.court} | Fecha ${m.date}</span><span class="match-status ${stC}">${stT}</span></div>
+                    <div class="match-teams"><div class="team" onclick="openTeamModal('${home.id}')"><img src="${home.logo}"> <span class="team-name">${home.name}</span></div><div class="match-score">${scT}</div><div class="team" onclick="openTeamModal('${away.id}')"><img src="${away.logo}"> <span class="team-name">${away.name}</span></div></div>
                 </div>`;
             }).join('') || '<p class="text-muted">No hay partidos.</p>';
         }
@@ -836,8 +972,7 @@
             document.getElementById('teams-container').innerHTML = state.teams.map(t => {
                 let st = state.standings.find(s => s.id === t.id);
                 return `<div class="team-card glass" onclick="openTeamModal('${t.id}')">
-                    <img src="${t.logo}"><h3 class="title-font">${t.name}</h3>
-                    <p class="text-muted" style="font-size:0.8rem;"><i class="fa-solid fa-map-pin"></i> ${t.city}</p>
+                    <img src="${t.logo}"><h3 class="title-font">${t.name}</h3><p class="text-muted" style="font-size:0.8rem;"><i class="fa-solid fa-map-pin"></i> ${t.city}</p>
                     <div class="team-stats-mini"><span><i class="fa-solid fa-check text-success"></i> ${st.pg} G</span> <span><i class="fa-solid fa-xmark text-danger"></i> ${st.pp} P</span></div>
                     <button class="btn btn-secondary" style="width:100%; padding:0.5rem;">Ver Plantel</button>
                 </div>`;
@@ -846,34 +981,19 @@
 
         function renderStats() {
             let all = [...state.players].filter(p => p.stats.pj > 0);
-
-            const getAvg = (p, stat) => {
-                let pj = p.stats.pj;
-                return pj > 0 ? (p.stats[stat] / pj).toFixed(1) : "0.0";
-            };
-
+            const getAvg = (p, stat) => { let pj = p.stats.pj; return pj > 0 ? (p.stats[stat] / pj).toFixed(1) : "0.0"; };
             const container = document.getElementById('leaders-container');
-            
-            if(all.length === 0) {
-                container.innerHTML = `<p class="text-muted" style="grid-column:1/-1;">Aún no hay estadísticas cargadas en el sistema. Los datos aparecerán cuando el administrador ingrese los números de cada partido.</p>`;
-                return;
-            }
-
+            if(all.length === 0) { container.innerHTML = `<p class="text-muted" style="grid-column:1/-1;">Aún no hay estadísticas cargadas en el sistema.</p>`; return; }
             let topPts = [...all].sort((a,b) => parseFloat(getAvg(b,'pts')) - parseFloat(getAvg(a,'pts')))[0];
             let topReb = [...all].sort((a,b) => parseFloat(getAvg(b,'reb')) - parseFloat(getAvg(a,'reb')))[0];
             let topAst = [...all].sort((a,b) => parseFloat(getAvg(b,'ast')) - parseFloat(getAvg(a,'ast')))[0];
-
             let leaders = [];
-            if(topPts) leaders.push({ type: 'Puntos', p: topPts, val: getAvg(topPts,'pts') });
-            if(topReb) leaders.push({ type: 'Rebotes', p: topReb, val: getAvg(topReb,'reb') });
-            if(topAst) leaders.push({ type: 'Asistencias', p: topAst, val: getAvg(topAst,'ast') });
-
+            if(topPts) leaders.push({ type: 'Puntos', p: topPts, val: getAvg(topPts,'pts') }); if(topReb) leaders.push({ type: 'Rebotes', p: topReb, val: getAvg(topReb,'reb') }); if(topAst) leaders.push({ type: 'Asistencias', p: topAst, val: getAvg(topAst,'ast') });
             container.innerHTML = leaders.map(l => {
                 const team = getTeam(l.p.teamId);
                 return `<div class="leader-card glass" onclick="openPlayerModal('${l.p.id}')">
                     <div class="stat-type">${l.type}</div><img src="${l.p.img}" class="leader-img">
-                    <div class="leader-info" style="flex:1;">
-                        <h3>${l.p.name}</h3><p><img src="${team.logo}" style="width:15px; vertical-align:middle;"> ${team.name}</p>
+                    <div class="leader-info" style="flex:1;"><h3>${l.p.name}</h3><p><img src="${team.logo}" style="width:15px; vertical-align:middle;"> ${team.name}</p>
                         <div class="leader-stat">${l.val} <span style="font-size:0.6rem; color:var(--text-muted); font-weight:normal;">/ PARTIDO</span></div>
                     </div>
                 </div>`;
@@ -892,15 +1012,11 @@
                 </div>
             `).join('');
 
-            // Solamente el administrador verá las opciones de edición de noticias
             if(currentUser && currentUser.role === 'admin') {
                 document.getElementById('admin-news-list').innerHTML = state.news.map(n => `
                     <div class="list-group-item glass">
                         <div><strong>${n.title}</strong> <span style="font-size:0.8rem; color:var(--text-muted);">${n.date}</span></div>
-                        <div style="display:flex; gap:10px;">
-                            <button class="btn btn-secondary btn-small" onclick="adminEditNews(${n.id})">Editar</button>
-                            <button class="btn btn-danger btn-small" onclick="adminDeleteNews(${n.id})">Borrar</button>
-                        </div>
+                        <div style="display:flex; gap:10px;"><button class="btn btn-secondary btn-small" onclick="adminEditNews(${n.id})">Editar</button><button class="btn btn-danger btn-small" onclick="adminDeleteNews(${n.id})">Borrar</button></div>
                     </div>
                 `).join('');
             }
@@ -909,7 +1025,6 @@
         function renderBracket() {
             const allFinished = state.matches.length > 0 && state.matches.every(m => m.status === 'final');
             const msg = document.getElementById('playoffs-message');
-            
             if(!allFinished) {
                 msg.style.display = 'block';
                 document.getElementById('bracket-container').innerHTML = `
@@ -918,8 +1033,7 @@
                     <div class="bracket-round"><h4 style="color:var(--success); text-align:center;">Campeón</h4><div class="matchup glass" style="padding:1.5rem; text-align:center;"><i class="fa-solid fa-trophy" style="font-size:2rem; color:var(--success);"></i><br>TBD</div></div>
                 `;
             } else {
-                msg.style.display = 'none';
-                const s = state.standings;
+                msg.style.display = 'none'; const s = state.standings;
                 document.getElementById('bracket-container').innerHTML = `
                     <div class="bracket-round round-1"><h4 style="color:var(--primary); text-align:center;">Semifinales</h4>${renderMatchup(s[0], s[3])}${renderMatchup(s[1], s[2])}</div>
                     <div class="bracket-round round-3"><h4 style="color:var(--primary); text-align:center;">Final</h4>${renderMatchup(null, null)}</div>
@@ -929,22 +1043,15 @@
         }
 
         function renderMatchup(t1, t2) {
-            let n1 = t1 ? t1.name : 'Por definir';
-            let l1 = t1 ? `<img src="${t1.logo}" style="width:20px;"> ` : '';
-            let n2 = t2 ? t2.name : 'Por definir';
-            let l2 = t2 ? `<img src="${t2.logo}" style="width:20px;"> ` : '';
-            return `<div class="matchup">
-                <div class="matchup-team"><span style="display:flex; align-items:center; gap:5px;">${l1}${n1}</span><span>-</span></div>
-                <div class="matchup-team"><span style="display:flex; align-items:center; gap:5px;">${l2}${n2}</span><span>-</span></div>
-            </div>`;
+            let n1 = t1 ? t1.name : 'Por definir'; let l1 = t1 ? `<img src="${t1.logo}" style="width:20px;"> ` : '';
+            let n2 = t2 ? t2.name : 'Por definir'; let l2 = t2 ? `<img src="${t2.logo}" style="width:20px;"> ` : '';
+            return `<div class="matchup"><div class="matchup-team"><span style="display:flex; align-items:center; gap:5px;">${l1}${n1}</span><span>-</span></div><div class="matchup-team"><span style="display:flex; align-items:center; gap:5px;">${l2}${n2}</span><span>-</span></div></div>`;
         }
 
         function openArticle(newsId) {
-            const article = state.news.find(n => n.id === newsId);
-            let potmHtml = '';
+            const article = state.news.find(n => n.id === newsId); let potmHtml = '';
             if(article.potmPlayerId) {
-                const p = getPlayer(article.potmPlayerId);
-                const t = getTeam(p.teamId);
+                const p = getPlayer(article.potmPlayerId); const t = getTeam(p.teamId);
                 potmHtml = `<div class="potm-card cursor-pointer" onclick="openPlayerModal('${p.id}')">
                     <h4 style="color:var(--primary); font-size:0.8rem; margin-bottom:1rem;">JUGADOR DESTACADO</h4>
                     <img src="${p.img}"><h3>${p.name}</h3><p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem;"><img src="${t.logo}" style="width:15px; vertical-align:middle;"> ${t.name}</p>
@@ -952,345 +1059,106 @@
                 </div>`;
             }
             document.getElementById('article-full-content').innerHTML = `
-                <div class="article-header" style="background-image: url('${article.img}')">
-                    <div class="article-title-container">
-                        <span style="color:var(--primary); font-weight:bold; margin-bottom:0.5rem; display:block;">${article.date}</span>
-                        <h1 class="title-font" style="font-size: 3rem; margin-bottom: 1rem;">${article.title}</h1>
-                    </div>
-                </div>
-                <div class="article-body">
-                    <div class="article-text glass" style="padding: 2rem;"><p style="white-space:pre-wrap;">${article.fullText}</p><br><button class="btn btn-secondary" onclick="navigate('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button></div>
-                    <div>${potmHtml}</div>
-                </div>`;
+                <div class="article-header" style="background-image: url('${article.img}')"><div class="article-title-container"><span style="color:var(--primary); font-weight:bold; margin-bottom:0.5rem; display:block;">${article.date}</span><h1 class="title-font" style="font-size: 3rem; margin-bottom: 1rem;">${article.title}</h1></div></div>
+                <div class="article-body"><div class="article-text glass" style="padding: 2rem;"><p style="white-space:pre-wrap;">${article.fullText}</p><br><button class="btn btn-secondary" onclick="navigate('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button></div><div>${potmHtml}</div></div>`;
             navigate('article');
         }
 
-        // MODALES INFO (Solo lectura)
         function openTeamModal(teamId) {
-            const team = getTeam(teamId);
-            const stats = state.standings.find(s => s.id === teamId);
-            const roster = state.players.filter(p => p.teamId === teamId);
+            const team = getTeam(teamId); const stats = state.standings.find(s => s.id === teamId); const roster = state.players.filter(p => p.teamId === teamId);
             document.getElementById('modal-team-body').innerHTML = `
-                <div class="team-hero"><img src="${team.logo}">
-                    <h2 class="title-font" style="font-size:2.5rem;">${team.name}</h2>
-                    <p><i class="fa-solid fa-location-dot"></i> ${team.city} | <i class="fa-solid fa-user-tie"></i> Coach: ${team.coach}</p>
-                    <div style="display:inline-flex; gap:2rem; margin-top:1.5rem; background:rgba(0,0,0,0.3); padding:1rem; border-radius:8px;">
-                        <div style="text-align:center;"><div style="font-size:1.5rem; font-weight:bold; color:var(--primary);">${stats.pg}-${stats.pp}</div><div style="font-size:0.8rem; color:var(--text-muted);">Récord</div></div>
-                    </div>
+                <div class="team-hero"><img src="${team.logo}"><h2 class="title-font" style="font-size:2.5rem;">${team.name}</h2><p><i class="fa-solid fa-location-dot"></i> ${team.city} | <i class="fa-solid fa-user-tie"></i> Coach: ${team.coach}</p>
+                    <div style="display:inline-flex; gap:2rem; margin-top:1.5rem; background:rgba(0,0,0,0.3); padding:1rem; border-radius:8px;"><div style="text-align:center;"><div style="font-size:1.5rem; font-weight:bold; color:var(--primary);">${stats.pg}-${stats.pp}</div><div style="font-size:0.8rem; color:var(--text-muted);">Récord</div></div></div>
                 </div>
                 <div style="padding:1.5rem;"><h3 class="title-font" style="margin-bottom:1rem;">Plantel Principal</h3>
-                    <div class="roster-grid">${roster.map(p => `
-                        <div class="player-card" onclick="openPlayerModal('${p.id}')">
-                            <div class="player-number">${p.number}</div><img src="${p.img}"><div class="player-name">${p.name}</div><div class="player-pos">${p.pos}</div>
-                        </div>`).join('')}
-                    </div>
+                    <div class="roster-grid">${roster.map(p => `<div class="player-card" onclick="openPlayerModal('${p.id}')"><div class="player-number">${p.number}</div><img src="${p.img}"><div class="player-name">${p.name}</div><div class="player-pos">${p.pos}</div></div>`).join('')}</div>
                 </div>
             `;
             document.getElementById('team-modal').classList.add('active');
         }
 
         function openPlayerModal(playerId) {
-            const p = getPlayer(playerId); const team = getTeam(p.teamId);
-            const pj = p.stats.pj;
-            const pts = pj > 0 ? (p.stats.pts / pj).toFixed(1) : "0.0";
-            const reb = pj > 0 ? (p.stats.reb / pj).toFixed(1) : "0.0";
-            const ast = pj > 0 ? (p.stats.ast / pj).toFixed(1) : "0.0";
-
+            const p = getPlayer(playerId); const team = getTeam(p.teamId); const pj = p.stats.pj;
+            const pts = pj > 0 ? (p.stats.pts / pj).toFixed(1) : "0.0"; const reb = pj > 0 ? (p.stats.reb / pj).toFixed(1) : "0.0"; const ast = pj > 0 ? (p.stats.ast / pj).toFixed(1) : "0.0";
             document.getElementById('modal-player-body').innerHTML = `
-                <div class="player-hero"><img src="${p.img}" class="player-hero-img">
-                    <div><h2 class="title-font" style="font-size:2rem;">${p.name} #${p.number}</h2>
-                        <p style="color:var(--text-muted); margin-top:0.5rem;"><img src="${team.logo}" style="width:25px; vertical-align:middle;"> ${team.name}</p>
-                        <p style="margin-top:0.5rem; color:var(--text-muted);">${p.pos} | ${p.age} años | ${p.height}</p>
-                    </div>
-                </div>
-                <div class="player-stats-grid">
-                    <div class="stat-box"><div class="stat-val">${pts}</div><div class="stat-lbl">PPP</div></div>
-                    <div class="stat-box"><div class="stat-val">${reb}</div><div class="stat-lbl">RPP</div></div>
-                    <div class="stat-box"><div class="stat-val">${ast}</div><div class="stat-lbl">APP</div></div>
-                </div>
-                <div style="text-align:center; padding-bottom:2rem;">
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">Partidos Jugados: <span style="color: white; font-weight: bold;">${pj}</span></p>
-                </div>
+                <div class="player-hero"><img src="${p.img}" class="player-hero-img"><div><h2 class="title-font" style="font-size:2rem;">${p.name} #${p.number}</h2><p style="color:var(--text-muted); margin-top:0.5rem;"><img src="${team.logo}" style="width:25px; vertical-align:middle;"> ${team.name}</p><p style="margin-top:0.5rem; color:var(--text-muted);">${p.pos} | ${p.age} años | ${p.height}</p></div></div>
+                <div class="player-stats-grid"><div class="stat-box"><div class="stat-val">${pts}</div><div class="stat-lbl">PPP</div></div><div class="stat-box"><div class="stat-val">${reb}</div><div class="stat-lbl">RPP</div></div><div class="stat-box"><div class="stat-val">${ast}</div><div class="stat-lbl">APP</div></div></div>
+                <div style="text-align:center; padding-bottom:2rem;"><p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">Partidos Jugados: <span style="color: white; font-weight: bold;">${pj}</span></p></div>
             `;
-            document.getElementById('team-modal').classList.remove('active');
-            document.getElementById('player-modal').classList.add('active');
+            document.getElementById('team-modal').classList.remove('active'); document.getElementById('player-modal').classList.add('active');
         }
         
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-        // ADMIN PANEL
         function populateAdminSelects() {
-            const mSel = document.getElementById('admin-match-select');
-            mSel.innerHTML = '<option value="">-- Seleccionar --</option>' + state.matches.map(m => {
-                const home = getTeam(m.home); const away = getTeam(m.away);
-                const tag = m.status === 'final' ? '(FINALIZADO)' : '';
-                return `<option value="${m.id}">F${m.date}: ${home.name} vs ${away.name} ${tag}</option>`;
-            }).join('');
-            
-            const mStatSel = document.getElementById('admin-stat-match');
-            if (mStatSel) {
-                const finalMatches = state.matches.filter(m => m.status === 'final');
-                mStatSel.innerHTML = '<option value="">-- Seleccionar Partido --</option>' + finalMatches.map(m => {
-                    const home = getTeam(m.home); const away = getTeam(m.away);
-                    return `<option value="${m.id}">F${m.date}: ${home.name} vs ${away.name}</option>`;
-                }).join('');
-            }
-
-            const pSel = document.getElementById('admin-news-potm');
-            pSel.innerHTML = '<option value="">Ninguno</option>' + state.players.map(p => `<option value="${p.id}">${p.name} (${getTeam(p.teamId).name})</option>`).join('');
-            
-            const tSel = document.getElementById('admin-team-select');
-            tSel.innerHTML = '<option value="">-- Seleccionar --</option>' + state.teams.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
-
-            const plSel = document.getElementById('admin-player-select');
-            plSel.innerHTML = '<option value="">-- Seleccionar --</option>' + state.players.map(p => `<option value="${p.id}">${p.name} (${getTeam(p.teamId).name})</option>`).join('');
+            const mSel = document.getElementById('admin-match-select'); mSel.innerHTML = '<option value="">-- Seleccionar --</option>' + state.matches.map(m => `<option value="${m.id}">F${m.date}: ${getTeam(m.home).name} vs ${getTeam(m.away).name} ${m.status==='final'?'(FINALIZADO)':''}</option>`).join('');
+            const mStatSel = document.getElementById('admin-stat-match'); if (mStatSel) { mStatSel.innerHTML = '<option value="">-- Seleccionar Partido --</option>' + state.matches.filter(m => m.status === 'final').map(m => `<option value="${m.id}">F${m.date}: ${getTeam(m.home).name} vs ${getTeam(m.away).name}</option>`).join(''); }
+            document.getElementById('admin-news-potm').innerHTML = '<option value="">Ninguno</option>' + state.players.map(p => `<option value="${p.id}">${p.name} (${getTeam(p.teamId).name})</option>`).join('');
+            document.getElementById('admin-team-select').innerHTML = '<option value="">-- Seleccionar --</option>' + state.teams.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+            document.getElementById('admin-player-select').innerHTML = '<option value="">-- Seleccionar --</option>' + state.players.map(p => `<option value="${p.id}">${p.name} (${getTeam(p.teamId).name})</option>`).join('');
         }
 
-        function loadMatchScores() {
-            const id = document.getElementById('admin-match-select').value;
-            if(!id) return;
-            const m = state.matches.find(x => x.id === id);
-            if(m) {
-                document.getElementById('admin-score-home').value = m.status === 'final' ? m.homeScore : '';
-                document.getElementById('admin-score-away').value = m.status === 'final' ? m.awayScore : '';
-            }
-        }
-
-        function adminClearMatchForm() {
-            document.getElementById('admin-match-select').value = '';
-            document.getElementById('admin-score-home').value = '';
-            document.getElementById('admin-score-away').value = '';
-        }
-
+        function loadMatchScores() { const m = state.matches.find(x => x.id === document.getElementById('admin-match-select').value); if(m) { document.getElementById('admin-score-home').value = m.status === 'final' ? m.homeScore : ''; document.getElementById('admin-score-away').value = m.status === 'final' ? m.awayScore : ''; } }
+        function adminClearMatchForm() { document.getElementById('admin-match-select').value = ''; document.getElementById('admin-score-home').value = ''; document.getElementById('admin-score-away').value = ''; }
         function adminUpdateMatch() {
-            const id = document.getElementById('admin-match-select').value;
-            const sH = parseInt(document.getElementById('admin-score-home').value);
-            const sA = parseInt(document.getElementById('admin-score-away').value);
-
+            const id = document.getElementById('admin-match-select').value; const sH = parseInt(document.getElementById('admin-score-home').value); const sA = parseInt(document.getElementById('admin-score-away').value);
             if(!id || isNaN(sH) || isNaN(sA)) { alert('Complete partido y resultados numéricos.'); return; }
-            
-            const m = state.matches.find(x => x.id === id);
-            m.homeScore = sH; m.awayScore = sA; m.status = 'final';
-
-            if (!m.playerStats) m.playerStats = {}; 
-
-            saveState(); alert('Resultado guardado correctamente.');
-            adminClearMatchForm();
-            
-            recalculateAllData();
-            renderDashboard(); renderFixture(); renderStandings(); renderBracket(); populateAdminSelects(); renderStats();
+            const m = state.matches.find(x => x.id === id); m.homeScore = sH; m.awayScore = sA; m.status = 'final'; if (!m.playerStats) m.playerStats = {}; 
+            saveState(); alert('Resultado guardado correctamente.'); adminClearMatchForm(); recalculateAllData(); renderDashboard(); renderFixture(); renderStandings(); renderBracket(); populateAdminSelects(); renderStats();
         }
 
-        // Gestión de Carga Manual de Estadísticas
         function loadStatTeams() {
-            const matchId = document.getElementById('admin-stat-match').value;
-            const tSel = document.getElementById('admin-stat-team');
-            document.getElementById('admin-stat-player').innerHTML = '<option value="">-- Seleccionar --</option>';
-            clearStatInputs();
-            
-            if(!matchId) {
-                tSel.innerHTML = '<option value="">-- Seleccionar --</option>';
-                return;
-            }
-            const m = state.matches.find(x => x.id === matchId);
-            const home = getTeam(m.home);
-            const away = getTeam(m.away);
-            
-            tSel.innerHTML = `
-                <option value="">-- Seleccionar Equipo --</option>
-                <option value="${home.id}">${home.name}</option>
-                <option value="${away.id}">${away.name}</option>
-            `;
+            const matchId = document.getElementById('admin-stat-match').value; const tSel = document.getElementById('admin-stat-team');
+            document.getElementById('admin-stat-player').innerHTML = '<option value="">-- Seleccionar --</option>'; clearStatInputs();
+            if(!matchId) { tSel.innerHTML = '<option value="">-- Seleccionar --</option>'; return; }
+            const m = state.matches.find(x => x.id === matchId); const home = getTeam(m.home); const away = getTeam(m.away);
+            tSel.innerHTML = `<option value="">-- Seleccionar Equipo --</option><option value="${home.id}">${home.name}</option><option value="${away.id}">${away.name}</option>`;
         }
-
         function loadStatPlayers() {
-            const teamId = document.getElementById('admin-stat-team').value;
-            const pSel = document.getElementById('admin-stat-player');
-            clearStatInputs();
-            
-            if(!teamId) {
-                pSel.innerHTML = '<option value="">-- Seleccionar --</option>';
-                return;
-            }
-            
-            const players = state.players.filter(p => p.teamId === teamId);
-            pSel.innerHTML = '<option value="">-- Seleccionar Jugador --</option>' + players.map(p => `<option value="${p.id}">${p.name} #${p.number}</option>`).join('');
+            const teamId = document.getElementById('admin-stat-team').value; const pSel = document.getElementById('admin-stat-player'); clearStatInputs();
+            if(!teamId) { pSel.innerHTML = '<option value="">-- Seleccionar --</option>'; return; }
+            pSel.innerHTML = '<option value="">-- Seleccionar Jugador --</option>' + state.players.filter(p => p.teamId === teamId).map(p => `<option value="${p.id}">${p.name} #${p.number}</option>`).join('');
         }
-
         function loadPlayerMatchStats() {
-            const matchId = document.getElementById('admin-stat-match').value;
-            const playerId = document.getElementById('admin-stat-player').value;
-            
-            if(!matchId || !playerId) {
-                clearStatInputs();
-                return;
-            }
-            
-            const m = state.matches.find(x => x.id === matchId);
-            if(m.playerStats && m.playerStats[playerId]) {
-                const s = m.playerStats[playerId];
-                document.getElementById('admin-stat-pts').value = s.pts;
-                document.getElementById('admin-stat-reb').value = s.reb;
-                document.getElementById('admin-stat-ast').value = s.ast;
-            } else {
-                clearStatInputs();
-            }
+            const mId = document.getElementById('admin-stat-match').value; const pId = document.getElementById('admin-stat-player').value;
+            if(!mId || !pId) { clearStatInputs(); return; }
+            const m = state.matches.find(x => x.id === mId);
+            if(m.playerStats && m.playerStats[pId]) { document.getElementById('admin-stat-pts').value = m.playerStats[pId].pts; document.getElementById('admin-stat-reb').value = m.playerStats[pId].reb; document.getElementById('admin-stat-ast').value = m.playerStats[pId].ast; } else { clearStatInputs(); }
         }
-
-        function clearStatInputs() {
-            document.getElementById('admin-stat-pts').value = '';
-            document.getElementById('admin-stat-reb').value = '';
-            document.getElementById('admin-stat-ast').value = '';
-        }
-
-        function adminClearStatsForm() {
-            document.getElementById('admin-stat-match').value = '';
-            document.getElementById('admin-stat-team').innerHTML = '<option value="">-- Seleccionar --</option>';
-            document.getElementById('admin-stat-player').innerHTML = '<option value="">-- Seleccionar --</option>';
-            clearStatInputs();
-        }
-
+        function clearStatInputs() { document.getElementById('admin-stat-pts').value = ''; document.getElementById('admin-stat-reb').value = ''; document.getElementById('admin-stat-ast').value = ''; }
+        function adminClearStatsForm() { document.getElementById('admin-stat-match').value = ''; document.getElementById('admin-stat-team').innerHTML = '<option value="">-- Seleccionar --</option>'; document.getElementById('admin-stat-player').innerHTML = '<option value="">-- Seleccionar --</option>'; clearStatInputs(); }
         function adminSavePlayerStats() {
-            const matchId = document.getElementById('admin-stat-match').value;
-            const playerId = document.getElementById('admin-stat-player').value;
-            const pts = parseInt(document.getElementById('admin-stat-pts').value);
-            const reb = parseInt(document.getElementById('admin-stat-reb').value);
-            const ast = parseInt(document.getElementById('admin-stat-ast').value);
-
-            if(!matchId || !playerId || isNaN(pts) || isNaN(reb) || isNaN(ast)) {
-                alert('Complete todos los campos numéricos y seleccione partido y jugador.');
-                return;
-            }
-            
-            const m = state.matches.find(x => x.id === matchId);
-            if(!m.playerStats) m.playerStats = {};
-            
-            m.playerStats[playerId] = { pts, reb, ast };
-            
-            saveState();
-            recalculateAllData();
-            renderStats();
-            
-            alert('Estadísticas del jugador guardadas con éxito.');
+            const mId = document.getElementById('admin-stat-match').value; const pId = document.getElementById('admin-stat-player').value;
+            const pts = parseInt(document.getElementById('admin-stat-pts').value); const reb = parseInt(document.getElementById('admin-stat-reb').value); const ast = parseInt(document.getElementById('admin-stat-ast').value);
+            if(!mId || !pId || isNaN(pts) || isNaN(reb) || isNaN(ast)) { alert('Complete todos los campos numéricos y seleccione partido y jugador.'); return; }
+            const m = state.matches.find(x => x.id === mId); if(!m.playerStats) m.playerStats = {}; m.playerStats[pId] = { pts, reb, ast };
+            saveState(); recalculateAllData(); renderStats(); renderDashboard(); alert('Estadísticas guardadas con éxito.');
         }
 
-        function adminClearNewsForm() {
-            document.getElementById('admin-news-id').value = '';
-            document.getElementById('admin-news-title').value = '';
-            document.getElementById('admin-news-img').value = '';
-            document.getElementById('admin-news-summary').value = '';
-            document.getElementById('admin-news-full').value = '';
-            document.getElementById('admin-news-potm').value = '';
-            document.getElementById('admin-news-header').innerText = 'Crear/Editar Noticia';
-        }
-
+        function adminClearNewsForm() { document.getElementById('admin-news-id').value = ''; document.getElementById('admin-news-title').value = ''; document.getElementById('admin-news-img').value = ''; document.getElementById('admin-news-summary').value = ''; document.getElementById('admin-news-full').value = ''; document.getElementById('admin-news-potm').value = ''; document.getElementById('admin-news-header').innerText = 'Crear/Editar Noticia'; }
         function adminSaveNews() {
-            const idInput = document.getElementById('admin-news-id').value;
-            const t = document.getElementById('admin-news-title').value.trim();
-            const i = document.getElementById('admin-news-img').value.trim() || 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80';
-            const s = document.getElementById('admin-news-summary').value.trim();
-            const f = document.getElementById('admin-news-full').value.trim();
-            const p = document.getElementById('admin-news-potm').value;
-
+            const idInput = document.getElementById('admin-news-id').value; const t = document.getElementById('admin-news-title').value.trim(); const i = document.getElementById('admin-news-img').value.trim() || 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80'; const s = document.getElementById('admin-news-summary').value.trim(); const f = document.getElementById('admin-news-full').value.trim(); const p = document.getElementById('admin-news-potm').value;
             if(!t || !s || !f) { alert('Título, resumen y contenido son obligatorios.'); return; }
-
-            if(idInput) {
-                const n = state.news.find(x => x.id == idInput);
-                n.title = t; n.img = i; n.summary = s; n.fullText = f; n.potmPlayerId = p;
-                alert('Noticia actualizada.');
-            } else {
-                const dateOpts = { day: '2-digit', month: 'short', year: 'numeric' };
-                state.news.unshift({
-                    id: Date.now(), title: t, img: i, summary: s, fullText: f, potmPlayerId: p,
-                    date: new Date().toLocaleDateString('es-ES', dateOpts)
-                });
-                alert('Noticia publicada.');
-            }
-            saveState();
-            adminClearNewsForm();
-            renderNews();
+            if(idInput) { const n = state.news.find(x => x.id == idInput); n.title = t; n.img = i; n.summary = s; n.fullText = f; n.potmPlayerId = p; alert('Noticia actualizada.'); } 
+            else { state.news.unshift({ id: Date.now(), title: t, img: i, summary: s, fullText: f, potmPlayerId: p, date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }) }); alert('Noticia publicada.'); }
+            saveState(); adminClearNewsForm(); renderNews();
         }
+        function adminEditNews(id) { const n = state.news.find(x => x.id == id); document.getElementById('admin-news-id').value = n.id; document.getElementById('admin-news-title').value = n.title; document.getElementById('admin-news-img').value = n.img; document.getElementById('admin-news-summary').value = n.summary; document.getElementById('admin-news-full').value = n.fullText; document.getElementById('admin-news-potm').value = n.potmPlayerId || ''; document.getElementById('admin-news-header').innerText = 'Editando Noticia'; window.scrollTo(0, document.getElementById('admin-news-header').offsetTop - 100); }
+        function adminDeleteNews(id) { if(confirm('¿Seguro que deseas borrar esta noticia? No se podrá recuperar.')) { state.news = state.news.filter(x => x.id != id); saveState(); renderNews(); adminClearNewsForm(); } }
 
-        function adminEditNews(id) {
-            const n = state.news.find(x => x.id == id);
-            document.getElementById('admin-news-id').value = n.id;
-            document.getElementById('admin-news-title').value = n.title;
-            document.getElementById('admin-news-img').value = n.img;
-            document.getElementById('admin-news-summary').value = n.summary;
-            document.getElementById('admin-news-full').value = n.fullText;
-            document.getElementById('admin-news-potm').value = n.potmPlayerId || '';
-            document.getElementById('admin-news-header').innerText = 'Editando Noticia';
-            window.scrollTo(0, document.getElementById('admin-news-header').offsetTop - 100);
-        }
+        function adminClearTeamForm() { document.getElementById('admin-team-select').value = ''; document.getElementById('admin-team-name').value = ''; document.getElementById('admin-team-coach').value = ''; }
+        function loadTeamAdmin() { const t = getTeam(document.getElementById('admin-team-select').value); if(t) { document.getElementById('admin-team-name').value = t.name; document.getElementById('admin-team-coach').value = t.coach; } }
+        function adminUpdateTeam() { const t = getTeam(document.getElementById('admin-team-select').value); if(!t) return; t.name = document.getElementById('admin-team-name').value; t.coach = document.getElementById('admin-team-coach').value; saveState(); alert('Equipo actualizado exitosamente.'); recalculateAllData(); renderTeams(); renderDashboard(); populateAdminSelects(); }
 
-        function adminDeleteNews(id) {
-            if(confirm('¿Seguro que deseas borrar esta noticia? No se podrá recuperar.')) {
-                state.news = state.news.filter(x => x.id != id);
-                saveState(); renderNews(); adminClearNewsForm();
-            }
-        }
+        function adminClearPlayerForm() { document.getElementById('admin-player-select').value = ''; document.getElementById('admin-player-name').value = ''; document.getElementById('admin-player-pos').value = 'Base'; }
+        function loadPlayerAdmin() { const p = getPlayer(document.getElementById('admin-player-select').value); if(p) { document.getElementById('admin-player-name').value = p.name; document.getElementById('admin-player-pos').value = p.pos; } }
+        function adminUpdatePlayer() { const p = getPlayer(document.getElementById('admin-player-select').value); if(!p) return; p.name = document.getElementById('admin-player-name').value; p.pos = document.getElementById('admin-player-pos').value; saveState(); alert('Jugador actualizado exitosamente.'); recalculateAllData(); renderTeams(); renderStats(); renderDashboard(); populateAdminSelects(); }
 
-        // Gestión de Equipos y Jugadores (Admin Simple)
-        function adminClearTeamForm() {
-            document.getElementById('admin-team-select').value = '';
-            document.getElementById('admin-team-name').value = '';
-            document.getElementById('admin-team-coach').value = '';
-        }
-
-        function loadTeamAdmin() {
-            const id = document.getElementById('admin-team-select').value;
-            if(!id) return;
-            const t = getTeam(id);
-            if(t) {
-                document.getElementById('admin-team-name').value = t.name;
-                document.getElementById('admin-team-coach').value = t.coach;
-            }
-        }
-
-        function adminUpdateTeam() {
-            const id = document.getElementById('admin-team-select').value;
-            if(!id) return;
-            const t = getTeam(id);
-            t.name = document.getElementById('admin-team-name').value;
-            t.coach = document.getElementById('admin-team-coach').value;
-            saveState(); alert('Equipo actualizado exitosamente.');
-            recalculateAllData(); renderTeams(); populateAdminSelects();
-        }
-
-        function adminClearPlayerForm() {
-            document.getElementById('admin-player-select').value = '';
-            document.getElementById('admin-player-name').value = '';
-            document.getElementById('admin-player-pos').value = 'Base';
-        }
-
-        function loadPlayerAdmin() {
-            const id = document.getElementById('admin-player-select').value;
-            if(!id) return;
-            const p = getPlayer(id);
-            if(p) {
-                document.getElementById('admin-player-name').value = p.name;
-                document.getElementById('admin-player-pos').value = p.pos;
-            }
-        }
-
-        function adminUpdatePlayer() {
-            const id = document.getElementById('admin-player-select').value;
-            if(!id) return;
-            const p = getPlayer(id);
-            p.name = document.getElementById('admin-player-name').value;
-            p.pos = document.getElementById('admin-player-pos').value;
-            saveState(); alert('Jugador actualizado exitosamente.');
-            recalculateAllData(); renderTeams(); renderStats(); populateAdminSelects();
-        }
-
-        // BUSCADOR
         document.getElementById('global-search').addEventListener('input', function(e) {
             const q = e.target.value.toLowerCase();
             if(q.length > 2) {
-                const t = state.teams.find(x => x.name.toLowerCase().includes(q));
-                if(t) { navigate('teams'); setTimeout(() => openTeamModal(t.id), 500); e.target.value = ''; return; }
-                const p = state.players.find(x => x.name.toLowerCase().includes(q));
-                if(p) { openPlayerModal(p.id); e.target.value = ''; return; }
+                const t = state.teams.find(x => x.name.toLowerCase().includes(q)); if(t) { navigate('teams'); setTimeout(() => openTeamModal(t.id), 500); e.target.value = ''; return; }
+                const p = state.players.find(x => x.name.toLowerCase().includes(q)); if(p) { openPlayerModal(p.id); e.target.value = ''; return; }
             }
         });
 
