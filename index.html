@@ -1,3 +1,5 @@
+--- START OF FILE Paste July 20, 2026 - 4:38PM ---
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -150,12 +152,6 @@
         .close-modal { position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); z-index: 10; }
         .close-modal:hover { color: white; }
 
-        .tab-headers { display: flex; border-bottom: 1px solid var(--glass-border); margin-bottom: 1.5rem; }
-        .tab-btn { flex: 1; padding: 1rem; text-align: center; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; transition: var(--transition); }
-        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: bold; }
-        .tab-body { display: none; }
-        .tab-body.active { display: block; animation: fadeIn 0.3s ease; }
-
         .team-hero { text-align: center; padding: 3rem 2rem; background: linear-gradient(to bottom, rgba(249,115,22,0.1), transparent); border-bottom: 1px solid var(--glass-border); }
         .team-hero img { width: 150px; height: 150px; object-fit: contain; margin-bottom: 1rem; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)); }
         
@@ -223,9 +219,8 @@
                 <li><a onclick="navigate('playoffs')" data-target="playoffs">Playoffs</a></li>
                 
                 <li id="nav-admin" class="hidden"><a onclick="navigate('admin')" data-target="admin" style="color: #94a3b8;"><i class="fa-solid fa-gear"></i> Admin</a></li>
-                <li id="nav-profile" class="hidden"><a onclick="navigate('profile')" data-target="profile" style="color: #22c55e;"><i class="fa-solid fa-user-circle"></i> Mi Perfil</a></li>
                 
-                <li id="nav-login-btn"><a onclick="showLogin()" style="color: var(--primary);"><i class="fa-solid fa-user"></i> Login / Registro</a></li>
+                <li id="nav-login-btn"><a onclick="showLogin()" style="color: var(--primary);"><i class="fa-solid fa-user"></i> Acceso Admin</a></li>
             </ul>
         </nav>
         <div class="search-bar">
@@ -346,7 +341,7 @@
             <div class="section-header">
                 <h2 class="title-font">Líderes <span class="text-accent">Estadísticos</span></h2>
             </div>
-            <p style="color:var(--text-muted); margin-bottom:1.5rem;">Las estadísticas se mantendrán en 0 hasta que comiencen los partidos.</p>
+            <p style="color:var(--text-muted); margin-bottom:1.5rem;">Carga manual de estadísticas luego de cada partido finalizado.</p>
             <div class="leaders-grid" id="leaders-container"></div>
         </section>
 
@@ -366,16 +361,6 @@
             <div id="article-full-content"></div>
         </section>
 
-        <!-- VISTA PERFIL JUGADOR (Privado) -->
-        <section id="view-profile" class="view-section hidden">
-            <div class="section-header">
-                <h2 class="title-font">Mi <span class="text-accent">Perfil</span></h2>
-            </div>
-            <div class="glass" style="max-width:800px; margin:0 auto; padding:2rem; border-radius:12px;" id="profile-container">
-                <!-- Contenido generado por JS -->
-            </div>
-        </section>
-
         <!-- VISTA ADMIN -->
         <section id="view-admin" class="view-section hidden">
             <div class="section-header">
@@ -386,7 +371,7 @@
                 <!-- GESTIÓN DE PARTIDOS -->
                 <div class="glass admin-form">
                     <h3>Cargar/Editar Resultado</h3>
-                    <p style="color: var(--text-muted); font-size: 0.8rem;">Modifica marcadores. La tabla, estadísticas y playoffs se recalcularán solos.</p>
+                    <p style="color: var(--text-muted); font-size: 0.8rem;">Modifica marcadores. La tabla y playoffs se recalcularán solos.</p>
                     <div class="form-group">
                         <label>Seleccionar Partido</label>
                         <select class="form-control" id="admin-match-select" onchange="loadMatchScores()"></select>
@@ -403,7 +388,7 @@
                     </div>
                     <div style="display:flex; gap:1rem; margin-top:1rem;">
                         <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="adminUpdateMatch()">Guardar</button>
-                        <button class="btn btn-danger" style="flex:1; justify-content:center;" onclick="adminResetMatch()">Resetear Partido</button>
+                        <button class="btn btn-danger" style="flex:1; justify-content:center;" onclick="adminClearMatchForm()">Resetear</button>
                     </div>
                 </div>
 
@@ -435,9 +420,104 @@
                     </div>
                     <div style="display:flex; gap:1rem; margin-top:1rem;">
                         <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="adminSaveNews()">Guardar Noticia</button>
-                        <button class="btn btn-secondary" style="justify-content:center;" onclick="adminClearNewsForm()">Limpiar</button>
+                        <button class="btn btn-danger" style="flex:1; justify-content:center;" onclick="adminClearNewsForm()">Resetear</button>
                     </div>
                 </div>
+
+                <!-- GESTIÓN DE EQUIPOS (Simplificado) -->
+                <div class="glass admin-form">
+                    <h3>Editar Equipo</h3>
+                    <p style="color: var(--text-muted); font-size: 0.8rem;">Modifica la información básica del equipo.</p>
+                    <div class="form-group">
+                        <label>Seleccionar Equipo</label>
+                        <select class="form-control" id="admin-team-select" onchange="loadTeamAdmin()"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre del Equipo</label>
+                        <input type="text" class="form-control" id="admin-team-name">
+                    </div>
+                    <div class="form-group">
+                        <label>Entrenador</label>
+                        <input type="text" class="form-control" id="admin-team-coach">
+                    </div>
+                    <div style="display:flex; gap:1rem; margin-top:1rem;">
+                        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="adminUpdateTeam()">Guardar Equipo</button>
+                        <button class="btn btn-danger" style="flex:1; justify-content:center;" onclick="adminClearTeamForm()">Resetear</button>
+                    </div>
+                </div>
+
+                <!-- GESTIÓN DE JUGADORES (Simplificado) -->
+                <div class="glass admin-form">
+                    <h3>Editar Jugador</h3>
+                    <p style="color: var(--text-muted); font-size: 0.8rem;">Modifica los datos del jugador.</p>
+                    <div class="form-group">
+                        <label>Seleccionar Jugador</label>
+                        <select class="form-control" id="admin-player-select" onchange="loadPlayerAdmin()"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre del Jugador</label>
+                        <input type="text" class="form-control" id="admin-player-name">
+                    </div>
+                    <div class="form-group">
+                        <label>Posición</label>
+                        <select class="form-control" id="admin-player-pos">
+                            <option value="Base">Base</option>
+                            <option value="Escolta">Escolta</option>
+                            <option value="Alero">Alero</option>
+                            <option value="Ala-Pívot">Ala-Pívot</option>
+                            <option value="Pívot">Pívot</option>
+                        </select>
+                    </div>
+                    <div style="display:flex; gap:1rem; margin-top:1rem;">
+                        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="adminUpdatePlayer()">Guardar Jugador</button>
+                        <button class="btn btn-danger" style="flex:1; justify-content:center;" onclick="adminClearPlayerForm()">Resetear</button>
+                    </div>
+                </div>
+
+                <!-- CARGA DE ESTADÍSTICAS -->
+                <div class="glass admin-form" style="grid-column: 1 / -1;">
+                    <h3>Cargar Estadísticas del Partido</h3>
+                    <p style="color: var(--text-muted); font-size: 0.8rem;">Ingresa manualmente los puntos, rebotes y asistencias por jugador para calcular los promedios.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div class="form-group">
+                            <label>Seleccionar Partido (Finalizado)</label>
+                            <select class="form-control" id="admin-stat-match" onchange="loadStatTeams()"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Seleccionar Equipo</label>
+                            <select class="form-control" id="admin-stat-team" onchange="loadStatPlayers()">
+                                <option value="">-- Seleccionar --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Seleccionar Jugador</label>
+                            <select class="form-control" id="admin-stat-player" onchange="loadPlayerMatchStats()">
+                                <option value="">-- Seleccionar --</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem;">
+                        <div class="form-group">
+                            <label>Puntos</label>
+                            <input type="number" class="form-control" id="admin-stat-pts" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Rebotes</label>
+                            <input type="number" class="form-control" id="admin-stat-reb" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Asistencias</label>
+                            <input type="number" class="form-control" id="admin-stat-ast" min="0">
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:1rem; margin-top:1rem;">
+                        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="adminSavePlayerStats()">Guardar Estadísticas</button>
+                        <button class="btn btn-danger" style="flex:1; justify-content:center;" onclick="adminClearStatsForm()">Resetear</button>
+                    </div>
+                </div>
+
             </div>
 
             <!-- LISTA DE NOTICIAS PARA EDITAR -->
@@ -453,68 +533,20 @@
         <div class="modal-content modal-small glass">
             <i class="fa-solid fa-xmark close-modal" onclick="closeLogin()"></i>
             
-            <div class="tab-headers">
-                <div class="tab-btn active" onclick="switchAuthTab('login-player')">Jugador</div>
-                <div class="tab-btn" onclick="switchAuthTab('register-player')">Registro</div>
-                <div class="tab-btn" onclick="switchAuthTab('login-admin')">Admin</div>
-            </div>
-
-            <!-- Tab Login Jugador -->
-            <div class="tab-body active" id="tab-login-player">
-                <h3 style="margin-bottom:1rem; text-align:center;">Login Jugador</h3>
+            <div style="padding: 1rem;">
+                <h3 style="margin-bottom:1rem; text-align:center;">Ingreso Administrador</h3>
                 <div class="form-group">
                     <label>Usuario</label>
-                    <input type="text" class="form-control" id="login-player-user">
-                </div>
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <input type="password" class="form-control" id="login-player-pass">
-                </div>
-                <button class="btn btn-primary" style="width: 100%; justify-content:center; margin-top:1rem;" onclick="doLoginPlayer()">Entrar</button>
-            </div>
-
-            <!-- Tab Registro Jugador -->
-            <div class="tab-body" id="tab-register-player">
-                <h3 style="margin-bottom:1rem; text-align:center;">Registro Jugador</h3>
-                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Asocia tu cuenta a un jugador. Debes ser +18.</p>
-                <div class="form-group">
-                    <label>Selecciona tu Jugador</label>
-                    <select class="form-control" id="reg-player-select"></select>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" id="reg-player-email" placeholder="ejemplo@gmail.com">
-                </div>
-                <div class="form-group">
-                    <label>Fecha de Nacimiento</label>
-                    <input type="date" class="form-control" id="reg-player-dob">
-                </div>
-                <div class="form-group">
-                    <label>Usuario Deseado</label>
-                    <input type="text" class="form-control" id="reg-player-user">
-                </div>
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <input type="password" class="form-control" id="reg-player-pass">
-                </div>
-                <button class="btn btn-primary" style="width: 100%; justify-content:center; margin-top:1rem;" onclick="doRegisterPlayer()">Registrarse</button>
-            </div>
-
-            <!-- Tab Admin -->
-            <div class="tab-body" id="tab-login-admin">
-                <h3 style="margin-bottom:1rem; text-align:center;">Ingreso Admin</h3>
-                <div class="form-group">
-                    <label>Usuario Admin</label>
                     <input type="text" class="form-control" id="login-admin-user" placeholder="admin">
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 1rem;">
                     <label>Contraseña</label>
                     <input type="password" class="form-control" id="login-admin-pass" placeholder="admin">
                 </div>
-                <button class="btn btn-primary" style="width: 100%; justify-content:center; margin-top:1rem;" onclick="doLoginAdmin()">Entrar Panel</button>
+                <button class="btn btn-primary" style="width: 100%; justify-content:center; margin-top:1.5rem;" onclick="doLoginAdmin()">Entrar Panel</button>
+                
+                <p id="login-error" style="color:var(--danger); font-size:0.8rem; margin-top:1rem; text-align:center; display:none;">Error.</p>
             </div>
-
-            <p id="login-error" style="color:var(--danger); font-size:0.8rem; margin-top:1rem; text-align:center; display:none;">Error.</p>
         </div>
     </div>
 
@@ -544,14 +576,14 @@
     <script>
         // ESTADO Y PERSISTENCIA
         let state = {};
-        let currentUser = null; // { role: 'admin'|'player', id: null|'T1_P1' }
+        let currentUser = null; // { role: 'admin' }
 
         function saveState() {
-            localStorage.setItem('ligaProState_v4', JSON.stringify(state));
+            localStorage.setItem('ligaProState_v4_admin', JSON.stringify(state));
         }
 
         function loadState() {
-            const stored = localStorage.getItem('ligaProState_v4');
+            const stored = localStorage.getItem('ligaProState_v4_admin');
             if (stored) {
                 state = JSON.parse(stored);
             } else {
@@ -584,8 +616,7 @@
                 news: [
                     { id: 1, title: 'Presentación de la Nueva Temporada', date: '10 Jul 2026', summary: 'La liga arranca con todo. 8 equipos en 14 fechas.', img: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80', fullText: 'Formato de todos contra todos a doble rueda. Todos los equipos comienzan en cero.', potmPlayerId: '' }
                 ],
-                standings: [],
-                users: []
+                standings: []
             };
 
             const positions = ['Base', 'Escolta', 'Alero', 'Ala-Pívot', 'Pívot'];
@@ -597,9 +628,9 @@
                         name: `Jugador ${i} ${t.name.split(' ')[0]}`,
                         number: Math.floor(Math.random()*99)+1,
                         pos: positions[i%5],
-                        age: '-', // Edad en 0 o vacio hasta que se registren
+                        age: '24',
                         height: '1.80m',
-                        stats: { pts: 0, reb: 0, ast: 0 }, // TODO 0 como se pide
+                        stats: { pts: 0, reb: 0, ast: 0, pj: 0 }, 
                         img: `https://ui-avatars.com/api/?name=J${i}&background=random`
                     });
                 }
@@ -623,7 +654,7 @@
                         id: 'M' + matchId++, date: round.toString(), home: home, away: away,
                         homeScore: 0, awayScore: 0, status: 'scheduled',
                         court: state.teams.find(tm=>tm.id===home).court, time: '20:00',
-                        playerStats: {} // Aqui guardaremos las stats de cada partido para resetear facil
+                        playerStats: {} 
                     });
                 }
             }
@@ -656,8 +687,8 @@
 
         // AUTH & NAVIGATION
         function navigate(viewId) {
+            // Protección exclusiva para administrador
             if(viewId === 'admin' && (!currentUser || currentUser.role !== 'admin')) { showLogin(); return; }
-            if(viewId === 'profile' && (!currentUser || currentUser.role !== 'player')) { showLogin(); return; }
             
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             const target = document.getElementById(`view-${viewId}`);
@@ -671,19 +702,9 @@
             
             if(window.innerWidth <= 768) document.getElementById('nav-menu').classList.remove('active');
             window.scrollTo(0, 0);
-
-            if(viewId === 'profile') renderProfile();
         }
 
         function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
-
-        function switchAuthTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.tab-body').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById('tab-' + tabId).classList.add('active');
-            document.getElementById('login-error').style.display = 'none';
-        }
 
         function showLogin() { 
             if(currentUser) {
@@ -692,87 +713,45 @@
                 updateNavAuth();
                 navigate('home');
             } else {
-                const sel = document.getElementById('reg-player-select');
-                sel.innerHTML = state.players.map(p => `<option value="${p.id}">${getTeam(p.teamId).name} - ${p.name}</option>`).join('');
                 document.getElementById('login-modal').classList.add('active'); 
+                document.getElementById('login-error').style.display = 'none';
+                document.getElementById('login-admin-user').value = '';
+                document.getElementById('login-admin-pass').value = '';
             }
         }
         function closeLogin() { document.getElementById('login-modal').classList.remove('active'); }
 
         function updateNavAuth() {
             document.getElementById('nav-admin').classList.add('hidden');
-            document.getElementById('nav-profile').classList.add('hidden');
             
-            if(currentUser) {
-                if(currentUser.role === 'admin') document.getElementById('nav-admin').classList.remove('hidden');
-                if(currentUser.role === 'player') document.getElementById('nav-profile').classList.remove('hidden');
+            if(currentUser && currentUser.role === 'admin') {
+                document.getElementById('nav-admin').classList.remove('hidden');
                 document.getElementById('nav-login-btn').innerHTML = `<a onclick="showLogin()" style="color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>`;
             } else {
-                document.getElementById('nav-login-btn').innerHTML = `<a onclick="showLogin()" style="color: var(--primary);"><i class="fa-solid fa-user"></i> Login / Registro</a>`;
+                document.getElementById('nav-login-btn').innerHTML = `<a onclick="showLogin()" style="color: var(--primary);"><i class="fa-solid fa-user"></i> Acceso Admin</a>`;
             }
         }
 
         function doLoginAdmin() {
-            if(document.getElementById('login-admin-user').value === 'admin' && document.getElementById('login-admin-pass').value === 'admin') {
+            const u = document.getElementById('login-admin-user').value;
+            const p = document.getElementById('login-admin-pass').value;
+            
+            // Hardcoded admin account
+            if(u === 'admin' && p === 'admin') {
                 currentUser = { role: 'admin' };
                 sessionStorage.setItem('ligaProSession', JSON.stringify(currentUser));
-                closeLogin(); updateNavAuth(); navigate('admin');
+                closeLogin(); 
+                updateNavAuth(); 
+                navigate('admin');
             } else {
-                showMsg('Credenciales admin incorrectas');
-            }
-        }
-
-        function doRegisterPlayer() {
-            const pid = document.getElementById('reg-player-select').value;
-            const email = document.getElementById('reg-player-email').value.trim();
-            const dobInput = document.getElementById('reg-player-dob').value;
-            const u = document.getElementById('reg-player-user').value.trim();
-            const p = document.getElementById('reg-player-pass').value.trim();
-            
-            if(!u || !p || !email || !dobInput) { showMsg('Completa todos los campos'); return; }
-            
-            const dob = new Date(dobInput);
-            const today = new Date();
-            let age = today.getFullYear() - dob.getFullYear();
-            const m = today.getMonth() - dob.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) { age--; }
-
-            if(age < 18) { showMsg('Debes ser mayor de 18 años para registrarte en la liga.'); return; }
-
-            if(state.users.find(x => x.user === u)) { showMsg('El usuario ya existe'); return; }
-            if(state.users.find(x => x.playerId === pid)) { showMsg('Este jugador ya está registrado por otro usuario'); return; }
-
-            state.users.push({ user: u, pass: p, email: email, dob: dobInput, playerId: pid });
-            
-            // Actualizar la edad del jugador
-            const player = getPlayer(pid);
-            player.age = age;
-            saveState();
-
-            showMsg('Registro exitoso. Ahora inicia sesión.', false);
-            setTimeout(() => switchAuthTab('login-player'), 1500);
-        }
-
-        function doLoginPlayer() {
-            const u = document.getElementById('login-player-user').value.trim();
-            const p = document.getElementById('login-player-pass').value.trim();
-            const user = state.users.find(x => x.user === u && x.pass === p);
-            
-            if(user) {
-                currentUser = { role: 'player', id: user.playerId };
-                sessionStorage.setItem('ligaProSession', JSON.stringify(currentUser));
-                closeLogin(); updateNavAuth(); navigate('profile');
-            } else {
-                showMsg('Usuario o contraseña incorrectos');
+                showMsg('Credenciales incorrectas');
             }
         }
 
         // RECALCULAR TODO
         function recalculateAllData() {
-            // 1. Resetear posiciones
             state.standings = state.teams.map(t => ({...t, pj:0, pg:0, pp:0, pf:0, pc:0, diff:0, pts:0}));
-            // 2. Resetear stats de jugadores a 0
-            state.players.forEach(p => { p.stats = { pts: 0, reb: 0, ast: 0 }; });
+            state.players.forEach(p => { p.stats = { pts: 0, reb: 0, ast: 0, pj: 0 }; });
 
             state.matches.forEach(m => {
                 if(m.status === 'final') {
@@ -785,11 +764,15 @@
                     if(m.homeScore > m.awayScore) { home.pg++; home.pts += 2; away.pp++; away.pts += 1; } 
                     else { away.pg++; away.pts += 2; home.pp++; home.pts += 1; }
 
-                    // Sumar estadisticas guardadas en el partido al jugador
                     if(m.playerStats) {
                         for(const [pid, s] of Object.entries(m.playerStats)) {
                             const p = getPlayer(pid);
-                            if(p) { p.stats.pts += s.pts; p.stats.reb += s.reb; p.stats.ast += s.ast; }
+                            if(p) { 
+                                p.stats.pts += s.pts; 
+                                p.stats.reb += s.reb; 
+                                p.stats.ast += s.ast; 
+                                p.stats.pj += 1;
+                            }
                         }
                     }
                 }
@@ -798,7 +781,7 @@
             state.standings.sort((a,b) => b.pts - a.pts || b.diff - a.diff);
         }
 
-        // RENDER
+        // RENDER VISTAS PÚBLICAS
         function renderDashboard() {
             document.getElementById('dash-teams-count').innerText = state.teams.length;
             document.getElementById('dash-games-count').innerText = state.matches.filter(m => m.status === 'final').length;
@@ -862,21 +845,17 @@
         }
 
         function renderStats() {
-            // Obtener lideres actuales calculando promedios
-            let all = [...state.players].filter(p => {
-                let pj = getTeam(p.teamId) ? state.standings.find(s=>s.id === p.teamId).pj : 0;
-                return pj > 0; // Solo mostrar si ya jugó algún partido
-            });
+            let all = [...state.players].filter(p => p.stats.pj > 0);
 
             const getAvg = (p, stat) => {
-                let pj = state.standings.find(s=>s.id === p.teamId).pj;
+                let pj = p.stats.pj;
                 return pj > 0 ? (p.stats[stat] / pj).toFixed(1) : "0.0";
             };
 
             const container = document.getElementById('leaders-container');
             
             if(all.length === 0) {
-                container.innerHTML = `<p class="text-muted" style="grid-column:1/-1;">Aún no hay estadísticas. Comienza la temporada para generar datos.</p>`;
+                container.innerHTML = `<p class="text-muted" style="grid-column:1/-1;">Aún no hay estadísticas cargadas en el sistema. Los datos aparecerán cuando el administrador ingrese los números de cada partido.</p>`;
                 return;
             }
 
@@ -884,11 +863,10 @@
             let topReb = [...all].sort((a,b) => parseFloat(getAvg(b,'reb')) - parseFloat(getAvg(a,'reb')))[0];
             let topAst = [...all].sort((a,b) => parseFloat(getAvg(b,'ast')) - parseFloat(getAvg(a,'ast')))[0];
 
-            let leaders = [
-                { type: 'Puntos', p: topPts, val: getAvg(topPts,'pts') },
-                { type: 'Rebotes', p: topReb, val: getAvg(topReb,'reb') },
-                { type: 'Asistencias', p: topAst, val: getAvg(topAst,'ast') }
-            ];
+            let leaders = [];
+            if(topPts) leaders.push({ type: 'Puntos', p: topPts, val: getAvg(topPts,'pts') });
+            if(topReb) leaders.push({ type: 'Rebotes', p: topReb, val: getAvg(topReb,'reb') });
+            if(topAst) leaders.push({ type: 'Asistencias', p: topAst, val: getAvg(topAst,'ast') });
 
             container.innerHTML = leaders.map(l => {
                 const team = getTeam(l.p.teamId);
@@ -914,6 +892,7 @@
                 </div>
             `).join('');
 
+            // Solamente el administrador verá las opciones de edición de noticias
             if(currentUser && currentUser.role === 'admin') {
                 document.getElementById('admin-news-list').innerHTML = state.news.map(n => `
                     <div class="list-group-item glass">
@@ -986,89 +965,7 @@
             navigate('article');
         }
 
-        // PERFIL JUGADOR (EDITABLE)
-        function renderProfile() {
-            if(!currentUser || currentUser.role !== 'player') return;
-            const p = getPlayer(currentUser.id);
-            const team = getTeam(p.teamId);
-            
-            document.getElementById('profile-container').innerHTML = `
-                <div style="display:flex; flex-direction:column; align-items:center; gap:1rem; margin-bottom: 2rem;">
-                    <img src="${p.img}" style="width:150px; height:150px; border-radius:50%; object-fit:cover; border:3px solid var(--primary);">
-                    <h2 class="title-font">${p.name} #${p.number}</h2>
-                    <p style="color:var(--text-muted);"><img src="${team.logo}" style="width:20px; vertical-align:middle;"> ${team.name} | ${p.age} años</p>
-                </div>
-
-                <div class="profile-edit-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
-                    <div class="form-group">
-                        <label>Nombre a mostrar</label>
-                        <input type="text" class="form-control" id="profile-name" value="${p.name}">
-                    </div>
-                    <div class="form-group">
-                        <label>Posición</label>
-                        <select class="form-control" id="profile-pos">
-                            <option value="Base" ${p.pos==='Base'?'selected':''}>Base</option>
-                            <option value="Escolta" ${p.pos==='Escolta'?'selected':''}>Escolta</option>
-                            <option value="Alero" ${p.pos==='Alero'?'selected':''}>Alero</option>
-                            <option value="Ala-Pívot" ${p.pos==='Ala-Pívot'?'selected':''}>Ala-Pívot</option>
-                            <option value="Pívot" ${p.pos==='Pívot'?'selected':''}>Pívot</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Altura</label>
-                        <input type="text" class="form-control" id="profile-height" value="${p.height}" placeholder="1.80m">
-                    </div>
-                    <div class="form-group">
-                        <label>Cambiar Foto (Archivos)</label>
-                        <input type="file" id="profile-img-file" class="form-control" accept="image/*" style="padding: 0.5rem;">
-                    </div>
-                </div>
-                <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:2rem;" onclick="saveProfileChanges()">Guardar Cambios</button>
-            `;
-        }
-
-        function saveProfileChanges() {
-            const p = getPlayer(currentUser.id);
-            const n = document.getElementById('profile-name').value.trim();
-            const pos = document.getElementById('profile-pos').value;
-            const h = document.getElementById('profile-height').value.trim();
-            const fileInput = document.getElementById('profile-img-file');
-
-            if(!n) { alert("El nombre no puede estar vacío."); return; }
-            
-            p.name = n;
-            p.pos = pos;
-            p.height = h;
-
-            if(fileInput.files && fileInput.files[0]) {
-                const file = fileInput.files[0];
-                const lowerName = file.name.toLowerCase();
-                
-                if(lowerName.includes('desnudo') || lowerName.includes('nsfw') || lowerName.includes('violencia') || lowerName.includes('xxx')) {
-                    alert('Error: La imagen fue rechazada automáticamente por infringir normas.');
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    p.img = e.target.result; // Save Base64
-                    finalizeProfileSave();
-                };
-                reader.readAsDataURL(file);
-            } else {
-                finalizeProfileSave();
-            }
-        }
-
-        function finalizeProfileSave() {
-            saveState();
-            recalculateAllData();
-            renderTeams(); // Update names dynamically across app
-            alert('Perfil actualizado con éxito.');
-            renderProfile();
-        }
-
-        // MODALES INFO
+        // MODALES INFO (Solo lectura)
         function openTeamModal(teamId) {
             const team = getTeam(teamId);
             const stats = state.standings.find(s => s.id === teamId);
@@ -1094,10 +991,10 @@
 
         function openPlayerModal(playerId) {
             const p = getPlayer(playerId); const team = getTeam(p.teamId);
-            const pj = state.standings.find(s=>s.id === p.teamId).pj;
-            const pts = pj > 0 ? (p.stats.pts / pj).toFixed(1) : "0";
-            const reb = pj > 0 ? (p.stats.reb / pj).toFixed(1) : "0";
-            const ast = pj > 0 ? (p.stats.ast / pj).toFixed(1) : "0";
+            const pj = p.stats.pj;
+            const pts = pj > 0 ? (p.stats.pts / pj).toFixed(1) : "0.0";
+            const reb = pj > 0 ? (p.stats.reb / pj).toFixed(1) : "0.0";
+            const ast = pj > 0 ? (p.stats.ast / pj).toFixed(1) : "0.0";
 
             document.getElementById('modal-player-body').innerHTML = `
                 <div class="player-hero"><img src="${p.img}" class="player-hero-img">
@@ -1107,14 +1004,18 @@
                     </div>
                 </div>
                 <div class="player-stats-grid">
-                    <div class="stat-box"><div class="stat-val">${pts}</div><div class="stat-lbl">Puntos /P</div></div>
-                    <div class="stat-box"><div class="stat-val">${reb}</div><div class="stat-lbl">Rebotes /P</div></div>
-                    <div class="stat-box"><div class="stat-val">${ast}</div><div class="stat-lbl">Asistencias /P</div></div>
+                    <div class="stat-box"><div class="stat-val">${pts}</div><div class="stat-lbl">PPP</div></div>
+                    <div class="stat-box"><div class="stat-val">${reb}</div><div class="stat-lbl">RPP</div></div>
+                    <div class="stat-box"><div class="stat-val">${ast}</div><div class="stat-lbl">APP</div></div>
+                </div>
+                <div style="text-align:center; padding-bottom:2rem;">
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">Partidos Jugados: <span style="color: white; font-weight: bold;">${pj}</span></p>
                 </div>
             `;
             document.getElementById('team-modal').classList.remove('active');
             document.getElementById('player-modal').classList.add('active');
         }
+        
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
         // ADMIN PANEL
@@ -1125,9 +1026,24 @@
                 const tag = m.status === 'final' ? '(FINALIZADO)' : '';
                 return `<option value="${m.id}">F${m.date}: ${home.name} vs ${away.name} ${tag}</option>`;
             }).join('');
+            
+            const mStatSel = document.getElementById('admin-stat-match');
+            if (mStatSel) {
+                const finalMatches = state.matches.filter(m => m.status === 'final');
+                mStatSel.innerHTML = '<option value="">-- Seleccionar Partido --</option>' + finalMatches.map(m => {
+                    const home = getTeam(m.home); const away = getTeam(m.away);
+                    return `<option value="${m.id}">F${m.date}: ${home.name} vs ${away.name}</option>`;
+                }).join('');
+            }
 
             const pSel = document.getElementById('admin-news-potm');
             pSel.innerHTML = '<option value="">Ninguno</option>' + state.players.map(p => `<option value="${p.id}">${p.name} (${getTeam(p.teamId).name})</option>`).join('');
+            
+            const tSel = document.getElementById('admin-team-select');
+            tSel.innerHTML = '<option value="">-- Seleccionar --</option>' + state.teams.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+
+            const plSel = document.getElementById('admin-player-select');
+            plSel.innerHTML = '<option value="">-- Seleccionar --</option>' + state.players.map(p => `<option value="${p.id}">${p.name} (${getTeam(p.teamId).name})</option>`).join('');
         }
 
         function loadMatchScores() {
@@ -1140,6 +1056,12 @@
             }
         }
 
+        function adminClearMatchForm() {
+            document.getElementById('admin-match-select').value = '';
+            document.getElementById('admin-score-home').value = '';
+            document.getElementById('admin-score-away').value = '';
+        }
+
         function adminUpdateMatch() {
             const id = document.getElementById('admin-match-select').value;
             const sH = parseInt(document.getElementById('admin-score-home').value);
@@ -1150,44 +1072,116 @@
             const m = state.matches.find(x => x.id === id);
             m.homeScore = sH; m.awayScore = sA; m.status = 'final';
 
-            // Simular estadisticas para ese partido (asi los jugadores suman)
-            m.playerStats = {};
-            const playersHome = state.players.filter(p => p.teamId === m.home);
-            const playersAway = state.players.filter(p => p.teamId === m.away);
-            
-            [...playersHome, ...playersAway].forEach(p => {
-                // Generar estadisticas random para este match para que no queden en 0
-                m.playerStats[p.id] = {
-                    pts: Math.floor(Math.random()*25),
-                    reb: Math.floor(Math.random()*12),
-                    ast: Math.floor(Math.random()*8)
-                };
-            });
+            if (!m.playerStats) m.playerStats = {}; 
 
             saveState(); alert('Resultado guardado correctamente.');
-            document.getElementById('admin-score-home').value = ''; document.getElementById('admin-score-away').value = '';
+            adminClearMatchForm();
             
             recalculateAllData();
             renderDashboard(); renderFixture(); renderStandings(); renderBracket(); populateAdminSelects(); renderStats();
         }
 
-        function adminResetMatch() {
-            const id = document.getElementById('admin-match-select').value;
-            if(!id) { alert('Seleccione un partido primero.'); return; }
-
-            if(confirm('¿Seguro que deseas resetear este partido a 0? (Se descontarán los puntos de la tabla y estadísticas)')) {
-                const m = state.matches.find(x => x.id === id);
-                m.homeScore = 0;
-                m.awayScore = 0;
-                m.status = 'scheduled';
-                m.playerStats = {}; // Eliminar stats sumadas
-
-                saveState(); alert('Partido reseteado.');
-                document.getElementById('admin-score-home').value = ''; document.getElementById('admin-score-away').value = '';
-                
-                recalculateAllData();
-                renderDashboard(); renderFixture(); renderStandings(); renderBracket(); populateAdminSelects(); renderStats();
+        // Gestión de Carga Manual de Estadísticas
+        function loadStatTeams() {
+            const matchId = document.getElementById('admin-stat-match').value;
+            const tSel = document.getElementById('admin-stat-team');
+            document.getElementById('admin-stat-player').innerHTML = '<option value="">-- Seleccionar --</option>';
+            clearStatInputs();
+            
+            if(!matchId) {
+                tSel.innerHTML = '<option value="">-- Seleccionar --</option>';
+                return;
             }
+            const m = state.matches.find(x => x.id === matchId);
+            const home = getTeam(m.home);
+            const away = getTeam(m.away);
+            
+            tSel.innerHTML = `
+                <option value="">-- Seleccionar Equipo --</option>
+                <option value="${home.id}">${home.name}</option>
+                <option value="${away.id}">${away.name}</option>
+            `;
+        }
+
+        function loadStatPlayers() {
+            const teamId = document.getElementById('admin-stat-team').value;
+            const pSel = document.getElementById('admin-stat-player');
+            clearStatInputs();
+            
+            if(!teamId) {
+                pSel.innerHTML = '<option value="">-- Seleccionar --</option>';
+                return;
+            }
+            
+            const players = state.players.filter(p => p.teamId === teamId);
+            pSel.innerHTML = '<option value="">-- Seleccionar Jugador --</option>' + players.map(p => `<option value="${p.id}">${p.name} #${p.number}</option>`).join('');
+        }
+
+        function loadPlayerMatchStats() {
+            const matchId = document.getElementById('admin-stat-match').value;
+            const playerId = document.getElementById('admin-stat-player').value;
+            
+            if(!matchId || !playerId) {
+                clearStatInputs();
+                return;
+            }
+            
+            const m = state.matches.find(x => x.id === matchId);
+            if(m.playerStats && m.playerStats[playerId]) {
+                const s = m.playerStats[playerId];
+                document.getElementById('admin-stat-pts').value = s.pts;
+                document.getElementById('admin-stat-reb').value = s.reb;
+                document.getElementById('admin-stat-ast').value = s.ast;
+            } else {
+                clearStatInputs();
+            }
+        }
+
+        function clearStatInputs() {
+            document.getElementById('admin-stat-pts').value = '';
+            document.getElementById('admin-stat-reb').value = '';
+            document.getElementById('admin-stat-ast').value = '';
+        }
+
+        function adminClearStatsForm() {
+            document.getElementById('admin-stat-match').value = '';
+            document.getElementById('admin-stat-team').innerHTML = '<option value="">-- Seleccionar --</option>';
+            document.getElementById('admin-stat-player').innerHTML = '<option value="">-- Seleccionar --</option>';
+            clearStatInputs();
+        }
+
+        function adminSavePlayerStats() {
+            const matchId = document.getElementById('admin-stat-match').value;
+            const playerId = document.getElementById('admin-stat-player').value;
+            const pts = parseInt(document.getElementById('admin-stat-pts').value);
+            const reb = parseInt(document.getElementById('admin-stat-reb').value);
+            const ast = parseInt(document.getElementById('admin-stat-ast').value);
+
+            if(!matchId || !playerId || isNaN(pts) || isNaN(reb) || isNaN(ast)) {
+                alert('Complete todos los campos numéricos y seleccione partido y jugador.');
+                return;
+            }
+            
+            const m = state.matches.find(x => x.id === matchId);
+            if(!m.playerStats) m.playerStats = {};
+            
+            m.playerStats[playerId] = { pts, reb, ast };
+            
+            saveState();
+            recalculateAllData();
+            renderStats();
+            
+            alert('Estadísticas del jugador guardadas con éxito.');
+        }
+
+        function adminClearNewsForm() {
+            document.getElementById('admin-news-id').value = '';
+            document.getElementById('admin-news-title').value = '';
+            document.getElementById('admin-news-img').value = '';
+            document.getElementById('admin-news-summary').value = '';
+            document.getElementById('admin-news-full').value = '';
+            document.getElementById('admin-news-potm').value = '';
+            document.getElementById('admin-news-header').innerText = 'Crear/Editar Noticia';
         }
 
         function adminSaveNews() {
@@ -1236,14 +1230,57 @@
             }
         }
 
-        function adminClearNewsForm() {
-            document.getElementById('admin-news-id').value = '';
-            document.getElementById('admin-news-title').value = '';
-            document.getElementById('admin-news-img').value = '';
-            document.getElementById('admin-news-summary').value = '';
-            document.getElementById('admin-news-full').value = '';
-            document.getElementById('admin-news-potm').value = '';
-            document.getElementById('admin-news-header').innerText = 'Crear/Editar Noticia';
+        // Gestión de Equipos y Jugadores (Admin Simple)
+        function adminClearTeamForm() {
+            document.getElementById('admin-team-select').value = '';
+            document.getElementById('admin-team-name').value = '';
+            document.getElementById('admin-team-coach').value = '';
+        }
+
+        function loadTeamAdmin() {
+            const id = document.getElementById('admin-team-select').value;
+            if(!id) return;
+            const t = getTeam(id);
+            if(t) {
+                document.getElementById('admin-team-name').value = t.name;
+                document.getElementById('admin-team-coach').value = t.coach;
+            }
+        }
+
+        function adminUpdateTeam() {
+            const id = document.getElementById('admin-team-select').value;
+            if(!id) return;
+            const t = getTeam(id);
+            t.name = document.getElementById('admin-team-name').value;
+            t.coach = document.getElementById('admin-team-coach').value;
+            saveState(); alert('Equipo actualizado exitosamente.');
+            recalculateAllData(); renderTeams(); populateAdminSelects();
+        }
+
+        function adminClearPlayerForm() {
+            document.getElementById('admin-player-select').value = '';
+            document.getElementById('admin-player-name').value = '';
+            document.getElementById('admin-player-pos').value = 'Base';
+        }
+
+        function loadPlayerAdmin() {
+            const id = document.getElementById('admin-player-select').value;
+            if(!id) return;
+            const p = getPlayer(id);
+            if(p) {
+                document.getElementById('admin-player-name').value = p.name;
+                document.getElementById('admin-player-pos').value = p.pos;
+            }
+        }
+
+        function adminUpdatePlayer() {
+            const id = document.getElementById('admin-player-select').value;
+            if(!id) return;
+            const p = getPlayer(id);
+            p.name = document.getElementById('admin-player-name').value;
+            p.pos = document.getElementById('admin-player-pos').value;
+            saveState(); alert('Jugador actualizado exitosamente.');
+            recalculateAllData(); renderTeams(); renderStats(); populateAdminSelects();
         }
 
         // BUSCADOR
